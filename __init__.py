@@ -5,6 +5,8 @@ from flask_bootstrap import Bootstrap
 
 app = Flask(__name__)
 
+Bootstrap(app)
+
 #   Setting up path of Config file
 app.config.from_object('config.Conf')
 
