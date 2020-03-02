@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <!-- Begin page content -->
+    <main role="main" class="container">
+		<div class="contain">
+		  <div class="left-half round">
+		    <h2>Click the date on the calendar to show the event:</h2><br/>
+            <div id="datepicker"></div><br/><br/>
+            <span id="date_disp"></span> {Events}
+		  </div><br/>
+		  <div class="right-half round">
+		    <h2>Recent Events:</h2><br/><br/>
+			<!-- Foreach event start -->
+		    {Date} : {Events}<br/>
+			<!-- Foreach event end --> 
+		  </div>
+		</div>	
+    </main>
+
+{% endblock %}
