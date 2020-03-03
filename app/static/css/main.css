@@ -9,12 +9,13 @@ body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
   /* background-image: url('../img/bg.jpg') !important; */
-  background: linear-gradient(134.47deg,#000000,#5c78dc 127.34%,#1267be 195.33%);
+  background: whitesmoke;
 }
 
 .nav-link{
-	font-size: 25px;
-	margin: 10px;
+	font-size: 15px;
+  margin: 2px;
+  color: white;
 }
 
 .table-responsive>.fixed-column {

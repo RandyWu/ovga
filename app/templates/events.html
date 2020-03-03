@@ -17,6 +17,16 @@
 			<!-- Foreach event end --> 
 		  </div>
 		</div>	
-    </main>
+	</main>
+	
+		<!-- Inbuilt Custom Script for Calendar -->
+		<script>
+			$(document).ready(function(){
+				$('#datepicker').datepicker({format: 'M dd, yyyy', todayHighlight: 'True'});
+					$('#datepicker').on('changeDate', function() {
+						$('#date_disp').html( $('#datepicker').datepicker('getFormattedDate') );
+				});
+			});
+			</script>
 
 {% endblock %}
