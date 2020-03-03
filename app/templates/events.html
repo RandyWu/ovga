@@ -18,15 +18,19 @@
 		  </div>
 		</div>	
 	</main>
+	<br><br>
 	
-		<!-- Inbuilt Custom Script for Calendar -->
-		<script>
-			$(document).ready(function(){
-				$('#datepicker').datepicker({format: 'M dd, yyyy', todayHighlight: 'True'});
-					$('#datepicker').on('changeDate', function() {
-						$('#date_disp').html( $('#datepicker').datepicker('getFormattedDate') );
-				});
-			});
-			</script>
+<!-- Inbuilt Custom Script for Calendar -->
+<script src="../static/js/jquery-3.3.1.min.js"></script>
+<script src="../static/js/bootstrap-datepicker.min.js"></script>
 
-{% endblock %}
+<script>
+		$(document).ready(function(){
+			$('#datepicker').datepicker({format: 'M dd, yyyy', todayHighlight: 'True'});
+				$('#datepicker').on('changeDate', function() {
+					$('#date_disp').html( $('#datepicker').datepicker('getFormattedDate') );
+			});
+		});
+</script>
+
+{% endblock %}	
