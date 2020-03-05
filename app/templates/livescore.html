@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <!-- Begin page content -->
+    <main role="main" class="container">
+		<div class="contain">
+		  <div id="table-scroll" class="table-scroll">
+          <div class="table-wrap">
+			<table class="main-table">
+			    <!-- Foreach Group start -->
+				<tr>
+					<td colspan="21" class="fixed-side">Group 1 -- Scores</td>
+				</tr>
+				<tr>
+					<td class="fixed-side">Hole</td>
+					<td>1</td>
+					<td>2</td>
+					<td>3</td>
+					<td>4</td>
+					<td>5</td>
+					<td>6</td>
+					<td>7</td>
+					<td>8</td>
+					<td>9</td>
+					<td>10</td>
+					<td>11</td>
+					<td>12</td>
+					<td>13</td>
+					<td>14</td>
+					<td>15</td>
+					<td>16</td>
+					<td>17</td>
+					<td>18</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr class="fixed-column">
+					<td class="fixed-side">Par</td>
+					<td>1</td>
+					<td>2</td>
+					<td>3</td>
+					<td>4</td>
+					<td>5</td>
+					<td>6</td>
+					<td>7</td>
+					<td>8</td>
+					<td>9</td>
+					<td>10</td>
+					<td>11</td>
+					<td>12</td>
+					<td>13</td>
+					<td>14</td>
+					<td>15</td>
+					<td>16</td>
+					<td>17</td>
+					<td>18</td>
+					<td>{Total}</td>
+					<td></td>
+				</tr>
+				<!-- Foreach player -->
+				<tr>
+					<td class="fixed-side">Player 1</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>{Score end}</td>
+					<td>{Total}</td>
+					<td>{Result}</td>
+				</tr>
+				<!-- Foreach player end -->
+				<tr>
+					<td colspan="21" class="fixed-side">&nbsp;</td>
+				</tr>
+				<!-- Foreach Group end -->
+			</table>
+		  </div>
+		  </div>
+		</div>	
+    </main>
+
+{% endblock %}
