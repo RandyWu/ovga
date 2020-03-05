@@ -8,13 +8,13 @@ html {
 body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
-  background: whitesmoke;
+  /* background-image: url('../img/bg.jpg') !important; */
+  background: linear-gradient(134.47deg,#000000,#5c78dc 127.34%,#1267be 195.33%);
 }
 
 .nav-link{
-	font-size: 15px;
-  margin: 2px;
-  color: white;
+	font-size: 25px;
+	margin: 10px;
 }
 
 .table-responsive>.fixed-column {
@@ -53,8 +53,8 @@ body {
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 40px; /* Set the fixed height of the footer here */
-  line-height: 40px; /* Vertically center the text there */
+  height: 80px; /* Set the fixed height of the footer here */
+  line-height: 60px; /* Vertically center the text there */
   background: #515183;
   color: white;
 }
@@ -71,6 +71,57 @@ body > .container {
 code {
   font-size: 80%;
 }
+
+/* Horizontal table scroll with fixed first column */
+.table-scroll {
+	position:relative;
+	margin:auto;
+	overflow:hidden;
+	border:1px solid #000;
+}
+.table-wrap {
+	width:100%;
+	overflow:auto;
+}
+
+.table-scroll table {
+	width:100%;
+	margin:auto;
+	border-collapse:separate;
+	border-spacing:0;
+}
+.table-scroll th, .table-scroll td {
+	padding:5px 10px;
+	border:1px solid #000;
+	background:#fff;
+	white-space:nowrap;
+	vertical-align:top;
+}
+.table-scroll thead, .table-scroll tfoot {
+	background:#f9f9f9;
+}
+.clone {
+	position:absolute;
+	top:0;
+	left:0;
+	pointer-events:none;
+}
+.clone th, .clone td {
+	visibility:hidden
+}
+.clone td, .clone th {
+	border-color:transparent
+}
+.clone tbody th {
+	visibility:visible;
+	color:red;
+}
+.clone .fixed-side {
+	border:1px solid #000;
+	background:#eee;
+	visibility:visible;
+}
+.clone thead, .clone tfoot{background:transparent;}
 
 @media only screen and (max-width: 750px) {
 	.contain {
