@@ -7,7 +7,12 @@ from flask_login import UserMixin
 
 db = SQLAlchemy()
 
+class Course(db.Model, UserMixin):
+    __tablename__ = 'Course'
 
+    CourseID = db.Column(db.Integer, primary_key=True)
+    VenueID = db.Column(db.ForeignKey('Venues.VenueId'), nullable=False, index=True)
+    Num_Holes = db.Column(db.Integer, nullable=False)
 
 class Division(db.Model, UserMixin):
     __tablename__ = 'Division'
@@ -17,8 +22,6 @@ class Division(db.Model, UserMixin):
 
     Players = db.relationship('Player', secondary='PlayersDivision', backref='divisions')
 
-
-
 class Event(db.Model, UserMixin):
     __tablename__ = 'Events'
 
@@ -27,7 +30,13 @@ class Event(db.Model, UserMixin):
 
     Venue = db.relationship('Venue', primaryjoin='Event.Venue_Id == Venue.VenueId', backref='events')
 
+class Hole(db.Model, UserMixin):
+    __tablename__= 'Hole'
 
+    HoleID = db.Column(db.Integer, primary_key=True, nullable=False)
+    CourseID = db.Column(db.ForeignKey('Course.CourseID'), nullable=False, index=True)
+    Hole_Num = db.Column(db.Integer, nullable=False)
+    Par = db.Column(db.Integer, nullable=False)
 
 class Intersectional(db.Model, UserMixin):
     __tablename__ = 'Intersectionals'
@@ -39,7 +48,12 @@ class Intersectional(db.Model, UserMixin):
 
     Event = db.relationship('Event', primaryjoin='Intersectional.Event_Id == Event.EventId', backref='intersectionals')
 
+class Match(db.Model, UserMixin):
+    __tablename__ = 'Match'
 
+    MatchID = db.Column(db.Integer, primary_key=True, nullable=False)
+    VenueID = db.Column(db.ForeignKey('Venues.VenueId'), nullable=False, index=True)
+    CourseID = db.Column(db.ForeignKey('Course.CourseID'), nullable=False, index=True)
 
 t_PlayersDivision = db.Table(
     'PlayersDivision',
@@ -47,46 +61,23 @@ t_PlayersDivision = db.Table(
     db.Column('Division_Id', db.ForeignKey('Division.DivisionId'), nullable=False, index=True)
 )
 
-
-
 t_PlayersTeams = db.Table(
     'PlayersTeams',
     db.Column('Player_Id', db.ForeignKey('Players.PlayerId'), nullable=False, index=True),
     db.Column('Team_Id', db.ForeignKey('Teams.TeamId'), nullable=False, index=True)
 )
 
-
-
 class Score(db.Model, UserMixin):
     __tablename__ = 'Scores'
 
     ScoreId = db.Column(db.Integer, primary_key=True)
-    Player_Id = db.Column(db.ForeignKey('Players.PlayerId'), nullable=False, index=True)
-    Event_Id = db.Column(db.ForeignKey('Events.EventId'), nullable=False, index=True)
-    Hole1 = db.Column(db.Integer)
-    Hole2 = db.Column(db.Integer)
-    Hole3 = db.Column(db.Integer)
-    Hole4 = db.Column(db.Integer)
-    Hole5 = db.Column(db.Integer)
-    Hole6 = db.Column(db.Integer)
-    Hole7 = db.Column(db.Integer)
-    Hole8 = db.Column(db.Integer)
-    Hole9 = db.Column(db.Integer)
-    Hole10 = db.Column(db.Integer)
-    Hole11 = db.Column(db.Integer)
-    Hole12 = db.Column(db.Integer)
-    Hole13 = db.Column(db.Integer)
-    Hole14 = db.Column(db.Integer)
-    Hole15 = db.Column(db.Integer)
-    Hole16 = db.Column(db.Integer)
-    Hole17 = db.Column(db.Integer)
-    Hole18 = db.Column(db.Integer)
+    PlayerID = db.Column(db.ForeignKey('Players.PlayerId'), nullable=False, index=True)
+    EventID = db.Column(db.ForeignKey('Events.EventId'), nullable=False, index=True)
+    CourseID = db.Column(db.ForeignKey('Course.CourseID'), nullable=False, index=True)
+    HoleID = db.Column(db.ForeignKey('Hole.HoleID'), nullable=False)
+    MatchID = db.Column(db.ForeignKey('Match.MatchID'), nullable=False)
+    Strokes = db.Column(db.Integer, nullable=False)
     TeamScore = db.Column(db.Integer)
-
-    Event = db.relationship('Event', primaryjoin='Score.Event_Id == Event.EventId', backref='scores')
-    Player = db.relationship('Player', primaryjoin='Score.Player_Id == Player.PlayerId', backref='scores')
-
-
 
 class Team(db.Model, UserMixin):
     __tablename__ = 'Teams'
@@ -98,14 +89,11 @@ class Team(db.Model, UserMixin):
 
     Event = db.relationship('Event', primaryjoin='Team.Event_Id == Event.EventId', backref='teams')
 
-
-
 class User(db.Model, UserMixin):
     __tablename__ = 'Users'
 
     UserId = db.Column(db.Integer, primary_key=True)
     Role = db.Column(db.String(30), nullable=False)
-
 
 class Admin(User):
     __tablename__ = 'Admins'
@@ -113,7 +101,6 @@ class Admin(User):
     Admin_Id = db.Column(db.ForeignKey('Users.UserId'), primary_key=True)
     Password = db.Column(db.String(256), nullable=False)
     Email = db.Column(db.String(256), nullable=False)
-
 
 class Player(User):
     __tablename__ = 'Players'
@@ -136,3 +123,4 @@ class Venue(db.Model, UserMixin):
     VenueId = db.Column(db.Integer, primary_key=True)
     Name = db.Column(db.String(256), nullable=False)
     Address = db.Column(db.String(256))
+
