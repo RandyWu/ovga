@@ -19,6 +19,7 @@ class Division(db.Model, UserMixin):
 
     DivisionId = db.Column(db.Integer, primary_key=True)
     Division = db.Column(db.String(256), nullable=False)
+    Event_Id = db.Column(db.ForeignKey('Events.EventId'))
 
     Players = db.relationship('Player', secondary='PlayersDivision', backref='divisions')
 
@@ -27,6 +28,9 @@ class Event(db.Model, UserMixin):
 
     EventId = db.Column(db.Integer, primary_key=True)
     Venue_Id = db.Column(db.ForeignKey('Venues.VenueId'), nullable=False, index=True)
+    Name = db.Column(db.String(256))
+    Address = db.Column(db.String(256))
+    Date = db.Column(db.Date)
 
     Venue = db.relationship('Venue', primaryjoin='Event.Venue_Id == Venue.VenueId', backref='events')
 
