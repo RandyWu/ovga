@@ -1,9 +1,48 @@
 {% extends "base.html" %}
 {% block content %}
 
-<div class="left-half round">
-    <h1>Score page</h1>
-    <h1>{{player_name}}</h1>
-    <p>{{users}}</p>
-</div>
+    <!-- Begin page content -->
+    <main role="main" class="container">
+		<div class="contain">
+		  <div id="table-scroll" class="table-scroll">
+          <div class="table-wrap">
+			<table class="main-table">
+			    <!-- Foreach Group start -->
+                <tr><td colspan="21" class="fixed-side">Group 1 -- Scores</td></tr>
+				<tr>
+					<td class="fixed-side"><b>Hole</b></td>
+                    {%for hole_num in range(1,num_of_holes+1) %}
+					<td><b>{{hole_num}}</b></td>
+                    {% endfor %}
+					<td></td>
+					<td></td>
+				</tr>
+				<tr class="fixed-column">
+					<td class="fixed-side"><b>Par</b></td>
+					{%for par in par_list %}
+					<td><b>{{par}}</b></td>
+                    {% endfor %}
+					<td><b>{{par_total}}</b></td>
+					<td></td>
+				</tr>
+				<!-- Foreach player -->
+				<tr>
+					<td class="fixed-side">{Player Name}</td>
+                    {%for hole_num in range(num_of_holes) %}
+					<td>{{player_scores[hole_num].Strokes}}</td>
+                    {% endfor %}
+					<td><b>{{player_total_score}}</b></td>
+					<td>{Result}</td>
+				</tr>
+				<!-- Foreach player end -->
+				<tr>
+					<td colspan="21" class="fixed-side">&nbsp;</td>
+				</tr>
+				<!-- Foreach Group end -->
+			</table>
+		  </div>
+		  </div>
+		</div>	
+    </main>
+
 {% endblock %}
