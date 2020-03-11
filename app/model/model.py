@@ -17,9 +17,9 @@ class Course(db.Model, UserMixin):
 class Division(db.Model, UserMixin):
     __tablename__ = 'Division'
 
-    DivisionId = db.Column(db.Integer, primary_key=True)
+    DivisionID = db.Column(db.Integer, primary_key=True)
     Division = db.Column(db.String(256), nullable=False)
-    Event_Id = db.Column(db.ForeignKey('Events.EventId'))
+    EventID = db.Column(db.ForeignKey('Events.EventId'))
 
     Players = db.relationship('Player', secondary='PlayersDivision', backref='divisions')
 
@@ -59,11 +59,13 @@ class Match(db.Model, UserMixin):
     VenueID = db.Column(db.ForeignKey('Venues.VenueId'), nullable=False, index=True)
     CourseID = db.Column(db.ForeignKey('Course.CourseID'), nullable=False, index=True)
 
-t_PlayersDivision = db.Table(
-    'PlayersDivision',
-    db.Column('Player_Id', db.ForeignKey('Players.PlayerId'), nullable=False, index=True),
-    db.Column('Division_Id', db.ForeignKey('Division.DivisionId'), nullable=False, index=True)
-)
+class PlayerDivision(db.Model, UserMixin):
+    __tablename__ = 'PlayersDivision'
+
+    Player_Id = db.Column(db.ForeignKey('Players.PlayerId'), nullable=False, index=True)
+    Division_Id = db.Column(db.ForeignKey('Division.DivisionID'), nullable=False, index=True)
+    Event_Id = db.Column(db.ForeignKey('Events.EventId'), index=True)    
+    ID = db.Column(db.Integer, primary_key=True, nullable=False)
 
 t_PlayersTeams = db.Table(
     'PlayersTeams',
