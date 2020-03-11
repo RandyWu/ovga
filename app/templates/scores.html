@@ -8,7 +8,8 @@
           <div class="table-wrap">
 			<table class="main-table">
 			    <!-- Foreach Group start -->
-                <tr><td colspan="21" class="fixed-side">Group 1 -- Scores</td></tr>
+				{%for division in page_info %}
+                <tr><td colspan="21" class="fixed-side">Division {{division}} -- Scores</td></tr>
 				<tr>
 					<td class="fixed-side"><b>Hole</b></td>
                     {%for hole_num in range(1,num_of_holes+1) %}
@@ -26,19 +27,22 @@
 					<td></td>
 				</tr>
 				<!-- Foreach player -->
+				{%for player in page_info[division]%}
 				<tr>
 					<td class="fixed-side">{Player Name}</td>
-                    {%for hole_num in range(num_of_holes) %}
-					<td>{{player_scores[hole_num].Strokes}}</td>
+                    {%for hole_num in range(1,num_of_holes+1) %}
+					<td value={{hole_num}}>{{page_info[division][player][hole_num]}}</td>
                     {% endfor %}
-					<td><b>{{player_total_score}}</b></td>
+					<td><b>{{score_totals[player]}}</b></td>
 					<td>{Result}</td>
 				</tr>
+				{% endfor %}
 				<!-- Foreach player end -->
 				<tr>
 					<td colspan="21" class="fixed-side">&nbsp;</td>
 				</tr>
 				<!-- Foreach Group end -->
+				{% endfor %}
 			</table>
 		  </div>
 		  </div>
