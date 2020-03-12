@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- Begin page content -->
+<main role="main" class="container">
+	  <div class="left-half round">
+		<form id="set_par" method="POST">
+		    <!-- Href to scores/<event_id> -->
+			<h4>Event : <a href="#">{Event_ID} / {Venue_ID} - {Venue Name} @ {Venue Address}</a></h4><br/>
+			<div style="width:50%">
+				<h5>Add/Update Par for each holes:</h5><br/>
+				<table class='table table-sm table-hover table-dark table-striped'>
+					<tr>
+					  <th>Hole</th><th>Par</th>
+					</tr>
+					<!-- For each Hole and Par -->
+					<tr><td>{Hole 1}</td><td><input type='text' size='2' id='{par1}' /></td></tr>
+					<tr><td>{Hole 2}</td><td><input type='text' size='2' id='{par2}' /></td></tr>
+					<tr><td>{Hole 3}</td><td><input type='text' size='2' id='{par3}' /></td></tr>
+					<tr><td>{Hole 4}</td><td><input type='text' size='2' id='{par4}' /></td></tr>
+					<!-- For end -->
+				</table>
+				<center>
+				  <p><button type="button" id="addpar" class="btn btn-primary">Add/Update Par</button>
+				  <button type="button" class="btn btn-info" onclick="window.location='{{ url_for('admin') }}'"><i class="fas fa-backward"></i> Back</button></p>
+				  <div class="alert alert-info alert-dismissible" id="alert_setpar" role="alert">{Par set successfully}</div>
+				</center>
+			</div>
+		</form>
+	  </div><br/>
+</main>
+{% endblock %}

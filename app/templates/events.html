@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-
 {% block content %}
 
     <!-- Begin page content -->
@@ -13,8 +12,10 @@
 		  <div class="right-half round">
 		    <h2>Recent Events:</h2><br/><br/>
 			<!-- Foreach event start -->
-		    {Date} : {Events}<br/>
+		    {Date} : {Events}<br/><br/>
 			<!-- Foreach event end --> 
+			<!-- ID: 1. If logged in show, else hide URL: 2. If admin goto admin, else goto editscore -->
+			<p><button type="button" class="btn btn-info form-control" id="dashboard" onclick="window.location='{{ url_for('editscore') }}'">Go to Dashboard</button></p>
 		  </div>
 		</div>	
 	</main>

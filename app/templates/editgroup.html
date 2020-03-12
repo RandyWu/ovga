@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- Begin page content -->
+<main role="main" class="container">
+	<div class="contain">
+	  <div class="left-half round">
+	    <!-- Href to scores/<eventid> -->
+		<h4>Event : <a href="#">{Event_ID} / {Venue_ID} - {Venue Name} @ {Venue Address}</a></h4><br/>
+		<h4>Add Group:</h4><br/>
+		<form id="add_group">
+			Group/Division Name: <input type="text" id="group_name" class="form-control" required /><br/>
+			Number of Groups: <input type="text" id="no_of_group" class="form-control" required /><br/>
+			<br/>
+			<center>
+			<p><button type="button" class="btn btn-primary" id="addgroup">AddGroup</button>
+			<button type="button" class="btn btn-info" onclick="window.location='{{ url_for('admin') }}'"><i class="fas fa-backward"></i> Back</button></p>
+			<div class="alert alert-info alert-dismissible" id="alert_addgroup" role="alert">{Group added successfully}</div>
+		</form>
+	  </div><br/>
+	  <div class="right-half round">
+		<h2>Update/Delete Group:</h2><br/><br/>
+		<form id="upd_del_group">
+			Select a group: &nbsp;
+			<select class="btn btn-outline-info btn-sm">
+			   <!-- For each Groups -->
+			   <option>Group 1</option>
+			   <option>Group 2</option>
+			   <option>Group 3</option>
+			   <option>Group 4</option>
+			   <option>Group 5</option>
+			   <!-- If No Groups Present  -->
+			   <!-- <option>No Groups</option> -->
+			</select><br/><br/>
+			<!-- Display group if a group is selected, else hide -->
+			<div id="disp_group">
+				<!-- On select group populate its ID and Name automatically -->
+				Group/Division ID: <input type="text" id="eventid" class="form-control" required /><br/>
+				Group/Division Name: <input type="text" id="eventid" class="form-control" required /><br/>
+			</div>
+			<center>
+			<p><button type="button" class="btn btn-primary" id="updgroup">Update Group</button>
+			<button type="button" class="btn btn-danger" id="delgroup">Delete Group</button></p>
+			<div class="alert alert-info alert-dismissible" id="alert_upddelgroup" role="alert">{Group updated/deleted successfully}</div>
+			</center>
+		</form>
+		
+	  </div>
+	</div>	
+</main>
+{% endblock %}

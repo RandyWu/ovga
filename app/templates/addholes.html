@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- Begin page content -->
+<main role="main" class="container">
+	<div class="contain">
+	  <div class="right-half round">
+	    <!-- Href to scores/<event_id> -->
+		<h4>Event : <a href="#">{Event_ID} / {Venue_ID} - {Venue Name} @ {Venue Address}</a></h4><br/>
+		<h4>Add Holes:</h4><br/>
+		<div style="width:50%">
+		<form id="add_holes" method="POST">
+			<!-- Venue ID Populated from Session -->
+			Venue ID: <input type="text" id="venue_id" class="form-control" required disabled /><br/>
+			Enter no. of. Holes: <input type="text" id="no_of_holes" class="form-control" required /><br/><br/>
+			<center>
+			<button type="button" class="btn btn-primary form-control" id="addgroup">Add Holes</button>&nbsp;&nbsp;<br/>
+			<button type="button" class="btn btn-info form-control" onclick="window.location='{{ url_for('admin') }}'"><i class="fas fa-backward"></i> Back</button><br/><br/>
+			<div class="alert alert-info alert-dismissible" id="alert_addholes" role="alert">{Holes added successfully}</div>
+		</form>
+		</div>
+	  </div>
+	</div>	
+</main>
+{% endblock %}

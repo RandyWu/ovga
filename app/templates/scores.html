@@ -4,47 +4,54 @@
     <!-- Begin page content -->
     <main role="main" class="container">
 		<div class="contain">
-		  <div id="table-scroll" class="table-scroll">
-          <div class="table-wrap">
-			<table class="main-table">
-			    <!-- Foreach Group start -->
-				{%for division in page_info %}
-                <tr><td colspan="21" class="fixed-side">Division {{division}} -- Scores</td></tr>
-				<tr>
-					<td class="fixed-side"><b>Hole</b></td>
-                    {%for hole_num in range(1,num_of_holes+1) %}
-					<td><b>{{hole_num}}</b></td>
-                    {% endfor %}
-					<td></td>
-					<td></td>
-				</tr>
-				<tr class="fixed-column">
-					<td class="fixed-side"><b>Par</b></td>
-					{%for par in par_list %}
-					<td><b>{{par}}</b></td>
-                    {% endfor %}
-					<td><b>{{par_total}}</b></td>
-					<td></td>
-				</tr>
-				<!-- Foreach player -->
-				{%for player in page_info[division]%}
-				<tr>
-					<td class="fixed-side">{Player Name}</td>
-                    {%for hole_num in range(1,num_of_holes+1) %}
-					<td value={{hole_num}}>{{page_info[division][player][hole_num]}}</td>
-                    {% endfor %}
-					<td><b>{{score_totals[player]}}</b></td>
-					<td>{Result}</td>
-				</tr>
-				{% endfor %}
-				<!-- Foreach player end -->
-				<tr>
-					<td colspan="21" class="fixed-side">&nbsp;</td>
-				</tr>
-				<!-- Foreach Group end -->
-				{% endfor %}
-			</table>
-		  </div>
+		  <div class="right-half round">
+		    <!-- href as scores/<event_id> -->
+		    <h4>Event : <a href="#">{Event_ID} / {Venue_ID} - {Venue Name} @ {Venue Address}</a></h4><br/>
+			<div id="table-scroll" class="table-scroll">
+			  <div class="table-wrap">
+				<table class="main-table">
+					<!-- Foreach Group start -->
+					{%for division in page_info %}
+					<tr><td colspan="21" class="fixed-side">Division {{division}} -- Scores</td></tr>
+					<tr>
+						<td class="fixed-side"><b>Hole</b></td>
+						{%for hole_num in range(1,num_of_holes+1) %}
+						<td><b>{{hole_num}}</b></td>
+						{% endfor %}
+						<td></td>
+						<td></td>
+					</tr>
+					<tr class="fixed-column">
+						<td class="fixed-side"><b>Par</b></td>
+						{%for par in par_list %}
+						<td><b>{{par}}</b></td>
+						{% endfor %}
+						<td><b>{{par_total}}</b></td>
+						<td></td>
+					</tr>
+					<!-- Foreach player -->
+					{%for player in page_info[division]%}
+					<tr>
+						<td class="fixed-side">{Player Name}</td>
+						{%for hole_num in range(1,num_of_holes+1) %}
+						<td value={{hole_num}}>{{page_info[division][player][hole_num]}}</td>
+						{% endfor %}
+						<td><b>{{score_totals[player]}}</b></td>
+						<td>{Result}</td>
+					</tr>
+					{% endfor %}
+					<!-- Foreach player end -->
+					<tr>
+						<td colspan="21" class="fixed-side">&nbsp;</td>
+					</tr>
+					<!-- Foreach Group end -->
+					{% endfor %}
+				</table>
+			  </div>
+			</div><br/>
+			<p><button type="button" class="btn btn-primary form-control" onclick="window.location='{{ url_for('events') }}'">Change Event</button></p>
+			<!-- ID: 1. If logged in show, else hide URL: 2. If admin goto admin, else goto editscore -->
+			<p><button type="button" class="btn btn-info form-control" id="dashboard" onclick="window.location='{{ url_for('admin') }}'">Go to Dashboard</button></p>
 		  </div>
 		</div>	
     </main>

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Begin page content -->
+<main role="main" class="container">
+	<div class="contain">
+	  <div class="left-half round">
+		<h4>Click the event link below to edit/update events, groups, players and their scores:</h4><br/>
+		<div id="datepicker"></div><br/><br/>
+		<span id="date_disp"></span> 
+		<!-- Href to scores/<eventid> -->
+		<a href="#">{Event}</a>
+	  </div><br/>
+	  <div class="right-half round">
+		<h2>Add event on the selected date:</h2><br/><br/>
+		<form id="edit_event">
+			Venue Name: <input type="text" id="eventid" class="form-control" required /><br/>
+			Venue Address: <input type="text" id="eventname" class="form-control" required /><br/>
+			Date: <input type="text" id="date_input" class="form-control" disabled /><br/>
+			<br/><br/>
+			<center>
+			  <button type="button" class="btn btn-primary" id="addevent">Add Event</button>
+			  <button type="button" class="btn btn-info" id="addevent" onclick="window.location='{{ url_for('admin') }}'"><i class="fas fa-backward"></i> Admin Panel</button>
+			</center>
+		</form>
+	  </div>
+	</div>	
+</main>
+<!-- Inbuilt Custom Script for Calendar -->
+<script src="../static/js/jquery-3.3.1.min.js"></script>
+<script src="../static/js/bootstrap-datepicker.min.js"></script>
+<script>
+	$(document).ready(function(){
+		$('#datepicker').datepicker({format: 'dd/mm/yyyy', todayHighlight: 'True'});
+			$('#datepicker').on('changeDate', function() {
+				$('#date_disp').html( $('#datepicker').datepicker('getFormattedDate') );
+				$('#date_input').val( $('#datepicker').datepicker('getFormattedDate') );
+		});
+	});
+</script>
+{% endblock %}

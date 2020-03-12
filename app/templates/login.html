@@ -1,34 +1,36 @@
 {% extends "base.html" %}
 {% block content %}
-<div>
-    <div class="mx-auto" style="padding: 5px;">
-        <h1>Login</h1>
-
-        <!-- <p class="lead">Pin a fixed-height footer to the bottom of the viewport in desktop browsers with this custom HTML and CSS. A fixed navbar has been added with <code>padding-top: 60px;</code> on the <code>body &gt; .container</code>.</p> -->
-        <!-- <p>Back to <a href="../sticky-footer/">the default sticky footer</a> minus the navbar.</p> -->
-        <table>
-          <tr>
-              <td>Username </td>
-              <td><input type="text" class="form-control" placeholder="Enter username"/></td>
-          </tr>
-          <tr>
-              <td>Password</td>
-              <td><input type="text" class="form-control" placeholder="Enter password"/></td>
-          </tr>
-          <tr>
-              <td colspan="2">&nbsp;</td>
-          </tr>
-          <tr>
-              <td colspan="2"><input type="submit" class="form-control btn btn-primary" value="Login"/></td>
-          </tr>
-          <tr>
-              <td colspan="2">&nbsp;</td>
-          </tr>
-          <tr>
-              <td colspan="2"><input type="submit" class="form-control btn btn-primary" value="General Public" href="livescore.html" /></td>
-          </tr>
-        </table>
-    </div>
-
-</div>
+<main role="main" class="container">
+	<div class="contain">
+	  <div class="right-half round">
+		<div>
+			<div class="mx-auto" style="padding: 5px;">
+				<h1>Login</h1><br/><br/>
+			    <table>
+				  <tr>
+					  <td>Username: </td>
+					  <td><input type="text" class="form-control" placeholder="Enter username"/></td>
+				  </tr>
+				  <tr>
+					  <td>Password: </td>
+					  <td><input type="text" class="form-control" placeholder="Enter password"/></td>
+				  </tr>
+				  <tr>
+					  <td colspan="2">&nbsp;</td>
+				  </tr>
+				  <tr>
+					  <td colspan="2"><input type="submit" class="form-control btn btn-primary" value="Login"/></td>
+				  </tr>
+				  <tr>
+					  <td colspan="2">&nbsp;</td>
+				  </tr>
+				  <tr>
+					  <td colspan="2"><input type="submit" class="form-control btn btn-warning" value="General Public" href="{{ url_for('events') }}" /></td>
+				  </tr>
+				</table>
+			</div>
+		</div>
+	  </div>
+	</div>
+</main>
 {% endblock %}
