@@ -8,20 +8,29 @@
 		<div id="datepicker"></div><br/><br/>
 		<span id="date_disp"></span> 
 		<!-- Href to scores/<eventid> -->
-		<a href="#">{Event}</a>
+		<a href="#">{{Event}}</a>
 	  </div><br/>
 	  <div class="right-half round">
-		<h2>Add event on the selected date:</h2><br/><br/>
-		<form id="edit_event">
-			Venue Name: <input type="text" id="eventid" class="form-control" required /><br/>
-			Venue Address: <input type="text" id="eventname" class="form-control" required /><br/>
-			Date: <input type="text" id="date_input" class="form-control" disabled /><br/>
+		<h2>Add event on the selected date:</h2><br/>
+		<form id="edit_event" method="POST">
+			<label for="venues">Venue:</label>
+			<select id="venues" name="selectedVenue" required/>
+				<option selected disabled value="">Select a Venue...</option>
+				{%for venue in venue_list%}
+				<option value={{venue.VenueId}}>{{venue.Name}} - {{venue.Address}}</option>
+				{% endfor %}
+			</select>
+			
+			<label for="eventName">Event Name:</label><input type="text" id="eventName" class="form-control" name="event_name" required /><br/>
+			<label for="dateInput">Date:<input type="text" id="dateInput" class="form-control" name='selected_date' readonly/><br/>
 			<br/><br/>
 			<center>
-			  <button type="button" class="btn btn-primary" id="addevent">Add Event</button>
-			  <button type="button" class="btn btn-info" id="addevent" onclick="window.location='{{ url_for('admin') }}'"><i class="fas fa-backward"></i> Admin Panel</button>
+				<button type="submit" class="btn btn-primary" id="addevent" name="submit" value="submit">Add Event</button>
+				<button type="button" class="btn btn-info" id="addevent" onclick="window.location='{{ url_for('admin') }}'"><i class="fas fa-backward"></i> Admin Panel</button>
 			</center>
 		</form>
+		<!--Confirmation message needs to show when page is validated-->
+		<div class="alert alert-info alert-dismissible" id="alert_addgroup" role="alert">{Event added successfully}</div>
 	  </div>
 	</div>	
 </main>
@@ -30,10 +39,10 @@
 <script src="../static/js/bootstrap-datepicker.min.js"></script>
 <script>
 	$(document).ready(function(){
-		$('#datepicker').datepicker({format: 'dd/mm/yyyy', todayHighlight: 'True'});
+		$('#datepicker').datepicker({format: 'yyyy/mm/dd', todayHighlight: 'True'});
 			$('#datepicker').on('changeDate', function() {
 				$('#date_disp').html( $('#datepicker').datepicker('getFormattedDate') );
-				$('#date_input').val( $('#datepicker').datepicker('getFormattedDate') );
+				$('#dateInput').val( $('#datepicker').datepicker('getFormattedDate') );
 		});
 	});
 </script>
