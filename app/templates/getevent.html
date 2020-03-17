@@ -1,0 +1,11 @@
+{% block content %}
+
+{% if success == 'TRUE' %}
+    {% for event in events%}
+        <li value={{event.EventId}}>{{event.Name}}</li>
+    {% endfor %}
+{% else %}
+    <li><b>No events this day</b></li>
+{% endif %}
+
+{% endblock %}
