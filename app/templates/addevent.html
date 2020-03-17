@@ -20,8 +20,9 @@
 				<option value={{venue.VenueId}}>{{venue.Name}} - {{venue.Address}}</option>
 				{% endfor %}
 			</select>
-			
-			<label for="eventName">Event Name:</label><input type="text" id="eventName" class="form-control" name="event_name" required /><br/>
+			<br/><br/>
+			<label for="eventName">Event Name:</label>
+			<input type="text" id="eventName" class="form-control" name="event_name" required /><br/>
 			<label for="dateInput">Date:<input type="text" id="dateInput" class="form-control" name='selected_date' readonly/><br/>
 			<br/><br/>
 			<center>
@@ -40,9 +41,9 @@
 <script>
 	$(document).ready(function(){
 		$('#datepicker').datepicker({format: 'yyyy/mm/dd', todayHighlight: 'True'});
-			$('#datepicker').on('changeDate', function() {
-				$('#date_disp').html( $('#datepicker').datepicker('getFormattedDate') );
-				$('#dateInput').val( $('#datepicker').datepicker('getFormattedDate') );
+		$('#datepicker').on('changeDate', function() {
+			$('#date_disp').html( $('#datepicker').datepicker('getFormattedDate') );
+			$('#dateInput').val( $('#datepicker').datepicker('getFormattedDate') );
 		});
 	});
 </script>
