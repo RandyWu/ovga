@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Begin page content -->
+<main role="main" class="container">
+	<div class="contain">
+	  <div class="right-half round">
+		<h4>Edit Personal Information:</h4><br/>
+		<form id="editpersonal" method="POST">
+			<div id="myInfo">
+			    <!-- Display details based on UserID login -->
+				<p>Name: <input type="text" id="myName" name="my_name" class="form-control" required /></p>
+				<p>Email: <input type="text" id="myEmail" name="my_email" class="form-control" required /></p>
+				<p>Password: <input type="password" id="myPasswd" name="my_passwd" class="form-control" required /></p>
+			</div>
+			<center><br/>
+				<button type="submit" class="btn btn-success" id="btnSave" name="btn_save">Save</button>
+				<button type="button" class="btn btn-info" onclick="window.location='{{ url_for('admin') }}'"><i class="fas fa-backward"></i> Back </button>
+			</center>
+		</form><br/>
+		<!--Confirmation message needs to show when page is validated-->
+		<div class="alert alert-info alert-dismissible text-center" id="alert_addgroup" role="alert">{Personal information changed successfully}</div>
+	  </div>
+	</div>	
+</main>
+{% endblock %}

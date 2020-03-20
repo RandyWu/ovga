@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Begin page content -->
+<main role="main" class="container">
+	<div class="contain">
+	  <div class="right-half round">
+		<form id="editevent_landing" method="POST">
+		    <!-- href as scores/<event_id> -->
+			<h4>{Username} - Edit Event</h4><br/>
+			<div style="width:50%">
+			<h6>Select an event to change its info or Add/Remove player in it:</h4><br/>
+			<!-- From Populated EventID & VenueID in Session -->
+			<p>Choose Event: 
+			  <select id="eventSelect" name="event_select" class="form-control">
+			    <!-- Foreach Event -->
+			    <option value="">{Event Name}</option>
+			  </select>
+			</p><br/><br/>
+				<!-- Submit changed scores to database onclick "Update/Delete Event" -->
+				<center>
+				<!-- If an event is selected then show Change Event Info & Add/Remove Player, else hide it -->
+				<button type="button" class="btn btn-primary form-control" id="change_eventinfo" onclick="window.location='{{ url_for('editevent_info') }}'">Change Event Info</button><br/><br/>
+				<button type="button" class="btn btn-success form-control" id="addrem_player" onclick="window.location='{{ url_for('editevent_player') }}'">Add/Remove Player</button><br/><br/>
+				<button type="button" class="btn btn-info form-control" onclick="window.location='{{ url_for('events_landing') }}'"><i class="fas fa-backward"></i> Back </button><br/><br/>
+				</center>
+			</div>
+		</form>
+	  </div>
+	</div>	
+</main>
+{% endblock %}

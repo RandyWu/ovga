@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Begin page content -->
+<main role="main" class="container">
+	<div class="contain">
+	  <div class="right-half round">
+		<form id="delevent" method="POST">
+		    <!-- href as scores/<event_id> -->
+			<h4>{Username} - Delete Event</h4><br/>
+			<div style="width:50%">
+			<h6>Select an event to delete it with all players & their scores present in it:</h4><br/>
+			<!-- From Populated EventID & VenueID in Session -->
+			<p>Choose Event: 
+			  <select id="eventSelect" name="event_select" class="form-control">
+			    <!-- Foreach Event -->
+			    <option value="">{Event Name}</option>
+			  </select>
+			</p><br/><br/>
+				<!-- Submit changed scores to database onclick "Update/Delete Event" -->
+				<center>
+				<!-- Delete all eventID from databases onclick Delete Event -->
+				<button type="button" class="btn btn-danger form-control" id="delevent_click">Delete Event</button><br/><br/>
+				<button type="button" class="btn btn-info form-control" onclick="window.location='{{ url_for('events_landing') }}'"><i class="fas fa-backward"></i> Back </button><br/><br/>
+				</center>
+			</div>
+		</form>
+	  </div>
+	</div>	
+</main>
+{% endblock %}

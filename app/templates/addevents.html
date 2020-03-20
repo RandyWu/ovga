@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Begin page content -->
+<main role="main" class="container">
+	<div class="contain">
+	  <div class="left-half round">
+		<h4>{Username} - Add Event</h4><br/>
+		<div id="datepicker"></div><br/><br/>
+		<span id="date_disp"></span> 
+	  </div><br/>
+	  <div class="right-half round">
+		<h4>Add event on the selected date:</h4><br/>
+		<form id="add_event" method="POST">
+			<p>Event Name: <input type="text" id="eventName" class="form-control" name="event_name" required /></p>
+			<p>Date: <input type="text" id="dateInput" class="form-control" name="selected_date" readonly /></p>
+			<p>Venue Name: <input type="text" id="venueName" class="form-control" name="venue_name" required /></p>
+			<p>Course Name: <input type="text" id="courseName" class="form-control" name="course_name" required /></p>
+			<center><br/>
+				<button type="submit" class="btn btn-primary" id="addevent" name="submit" value="submit">Add</button>
+				<button type="button" class="btn btn-info" id="addevent" onclick="window.location='{{ url_for('events_landing') }}'"><i class="fas fa-backward"></i> Back </button>
+			</center>
+		</form><br/>
+		<!--Confirmation message needs to show when page is validated-->
+		<div class="alert alert-info alert-dismissible text-center" id="alert_addgroup" role="alert">{Event added successfully}</div>
+	  </div>
+	</div>	
+</main>
+<!-- Inbuilt Custom Script for Calendar -->
+<script src="../static/js/jquery-3.3.1.min.js"></script>
+<script src="../static/js/bootstrap-datepicker.min.js"></script>
+<script>
+	$(document).ready(function(){
+		$('#datepicker').datepicker({format: 'yyyy/mm/dd', todayHighlight: 'True'});
+		$('#datepicker').on('changeDate', function() {
+			$('#date_disp').html( $('#datepicker').datepicker('getFormattedDate') );
+			$('#dateInput').val( $('#datepicker').datepicker('getFormattedDate') );
+		});
+	});
+</script>
+{% endblock %}

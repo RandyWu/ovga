@@ -5,19 +5,15 @@
 	<div class="contain">
 	  <div class="right-half round">
 	    <!-- Href to scores/<event_id> -->
-		<h4>Event : <a href="#">{Event_ID} / {Venue_ID} - {Venue Name} @ {Venue Address}</a></h4><br/>
+		<h4>{UserID} - {User Name}</h4><br/>
 		<h4>Admin Panel:</h4>
 		<div style="width:50%">
-		    <p><button type="button" name="btn_upddelevent" class="btn btn-primary form-control" onclick="window.location='{{ url_for('addevent') }}'">Add Event</button></p>
-			<p><button type="button" name="btn_upddelevent" class="btn btn-primary form-control" onclick="window.location='{{ url_for('editevent') }}'">Update/Delete Event</button></p>
-			<p><button type="button" name="btn_editgroup" class="btn btn-primary form-control" onclick="window.location='{{ url_for('editgroup') }}'">Edit Group</button></p>
-			<p><button type="button" name="btn_editplayers" class="btn btn-primary form-control" onclick="window.location='{{ url_for('editplayers') }}'">Edit Players</button></p>
-			<!-- disp only if holes are not present, else hide the button -->
-			<p><button type="button" name="btn_addholes" class="btn btn-primary form-control" onclick="window.location='{{ url_for('addholes') }}'">Add Holes</button></p>
-			<p><button type="button" name="btn_setpar" class="btn btn-primary form-control" onclick="window.location='{{ url_for('setpar') }}'">Set Par</button></p>
-			<p><button type="button" name="btn_editscores" class="btn btn-primary form-control" onclick="window.location='{{ url_for('editscore') }}'">Edit Scores</button></p>
-			<p><button type="button" name="btn_livescore" class="btn btn-primary form-control" onclick="window.location='{{ url_for('scores') }}'">Show All Scores</button></p>
-			<p><button type="button" name="btn_changevent" class="btn btn-primary form-control" onclick="window.location='{{ url_for('events') }}'">Change Event</button></p>
+		    <p><button type="button" name="btn_venues" class="btn btn-primary form-control" onclick="window.location='{{ url_for('venues_landing') }}'">Venues (Add, Edit & Delete)</button></p>
+		    <p><button type="button" name="btn_events" class="btn btn-primary form-control" onclick="window.location='{{ url_for('events_landing') }}'">Events (Add, Edit & Delete)</button></p>
+			<p><button type="button" name="btn_editscores" class="btn btn-primary form-control" onclick="window.location='{{ url_for('editscores_landing') }}'">Edit Scores (Choose Event, Edit Scores)</button></p>
+			<p><button type="button" name="btn_editcourses" class="btn btn-primary form-control" onclick="window.location='{{ url_for('editcourses') }}'">Edit Courses (Find course to edit by venue, change pars)</button></p>
+			<p><button type="button" name="btn_editplayers" class="btn btn-primary form-control" onclick="window.location='{{ url_for('editplayerinfo') }}'">Edit Players (Find players from dropdown, edit play information)</button></p>
+			<p><button type="button" name="btn_editpersonal" class="btn btn-primary form-control" onclick="window.location='{{ url_for('editpersonal') }}'">Personal (Change Password, Email, Name)</button></p>
 		</div>
 	  </div>
 	</div>	

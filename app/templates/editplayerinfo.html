@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Begin page content -->
+<main role="main" class="container">
+	<div class="contain">
+	  <div class="left-half round">
+		<h4>Edit Players</h4><br/>
+		<p>Choose a player: 
+		   <select id="playerSelect" name="player_select" class="form-control">
+			  <!-- Foreach Player -->
+			  <option value="">{Player ID - Player Name}</option>
+		   </select>
+		</p> 
+	  </div><br/>
+	  <div class="right-half round">
+		<h4>Player Information:</h4><br/>
+		<form id="editplayerinfo" method="POST">
+		    <!-- On select Player show this, else hide -->
+			<div id="playerInfo">
+				<p>Player Name: <input type="text" id="playerName" name="player_name" class="form-control" required /></p>
+				<p>Player Email: <input type="text" id="playerEmail" name="player_email" class="form-control" required /></p>
+				<p>Player Password: <input type="password" id="playerPasswd" name="player_passwd" class="form-control" required /></p>
+			</div>
+			<center><br/>
+				<button type="submit" class="btn btn-success" id="btnSave" name="btn_save">Save</button>
+				<button type="button" class="btn btn-info" onclick="window.location='{{ url_for('admin') }}'"><i class="fas fa-backward"></i> Back </button>
+			</center>
+		</form><br/>
+		<!--Confirmation message needs to show when page is validated-->
+		<div class="alert alert-info alert-dismissible text-center" id="alert_addgroup" role="alert">{Player information changed successfully}</div>
+	  </div>
+	</div>	
+</main>
+{% endblock %}

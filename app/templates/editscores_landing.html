@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Begin page content -->
+<main role="main" class="container">
+	<div class="contain">
+	  <div class="right-half round">
+		<form id="editscores_landing" method="POST">
+			<h4>{Username} - Edit Scores</h4><br/>
+			<div style="width:50%">
+			<h6>Select an event to view all its players & their scores and edit them...</h4><br/>
+			<p>Choose an Event: 
+			  <select id="eventSelect" name="event_select" class="form-control">
+			    <!-- Foreach Event -->
+			    <option value="">{Event Name}</option>
+			  </select>
+			</p><br/><br/>
+				<center>
+				<!-- If selected an event go to editscore.html -->
+				<button type="button" class="btn btn-primary form-control" id="event_select" onclick="window.location='{{ url_for('editscore') }}'">Edit Scores</button><br/><br/>
+				<button type="button" class="btn btn-info form-control" onclick="window.location='{{ url_for('admin') }}'"><i class="fas fa-backward"></i> Back to Admin</button><br/><br/>
+				</center>
+			</div>
+		</form>
+	  </div>
+	</div>	
+</main>
+{% endblock %}
