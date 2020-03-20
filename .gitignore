@@ -1,3 +1,7 @@
 .vscode
 .git
 .DS_Store
+__pycache__
+app/__pycache__
+app/controllers/__pycache__
+app/model/__pycache__
