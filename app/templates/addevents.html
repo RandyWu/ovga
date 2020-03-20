@@ -13,8 +13,18 @@
 		<form id="add_event" method="POST">
 			<p>Event Name: <input type="text" id="eventName" class="form-control" name="event_name" required /></p>
 			<p>Date: <input type="text" id="dateInput" class="form-control" name="selected_date" readonly /></p>
-			<p>Venue Name: <input type="text" id="venueName" class="form-control" name="venue_name" required /></p>
-			<p>Course Name: <input type="text" id="courseName" class="form-control" name="course_name" required /></p>
+			<label for="venueName">Venue:</label>
+			<select id="venueName" name="venue_name" class="form-control" required>
+			    <!-- Foreach Venue -->
+				<option value="">Select a Venue...</option>
+			    <option value="">{VenueName} - {Venue Address}</option>
+			</select>
+			<label for="courseName">Course:</label>
+			<select id="courseName" name="course_name" class="form-control" required>
+			    <!-- Foreach Venue -->
+				<option value="">Select a Course...</option>
+			    <option value="">{CourseName} - {Hole number}</option>
+			</select>
 			<center><br/>
 				<button type="submit" class="btn btn-primary" id="addevent" name="submit" value="submit">Add</button>
 				<button type="button" class="btn btn-info" id="addevent" onclick="window.location='{{ url_for('events_landing') }}'"><i class="fas fa-backward"></i> Back </button>

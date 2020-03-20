@@ -12,7 +12,8 @@ class Course(db.Model, UserMixin):
 
     CourseID = db.Column(db.Integer, primary_key=True)
     VenueID = db.Column(db.ForeignKey('Venues.VenueId'), nullable=False, index=True)
-    Num_Holes = db.Column(db.Integer, nullable=False)
+    Num_Holes = db.Column(db.Integer)
+    CourseName = db.Column(db.String(256))
 
 class Division(db.Model, UserMixin):
     __tablename__ = 'Division'
@@ -31,6 +32,7 @@ class Event(db.Model, UserMixin):
     Name = db.Column(db.String(256))
     Address = db.Column(db.String(256))
     Date = db.Column(db.Date)
+    CourseID = db.Column(db.ForeignKey('Course.CourseID'), nullable=False, index=True)
 
     Venue = db.relationship('Venue', primaryjoin='Event.Venue_Id == Venue.VenueId', backref='events')
 
