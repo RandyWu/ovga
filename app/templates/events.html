@@ -34,7 +34,7 @@
 
 <script>
 	$(document).ready(function(){
-		$('#datepicker').datepicker({format: 'M dd, yyyy', todayHighlight: 'True'});
+		$('#datepicker').datepicker({format: 'yyyy/mm/dd', todayHighlight: 'True'});
 		$('#datepicker').on('changeDate', function() {
 			$('#date_disp').html( $('#datepicker').datepicker('getFormattedDate') );
 			var fetch = $('#datepicker').datepicker('getFormattedDate');

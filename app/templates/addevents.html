@@ -6,7 +6,9 @@
 	  <div class="left-half round">
 		<h4>{Username} - Add Event</h4><br/>
 		<div id="datepicker"></div><br/><br/>
-		<span id="date_disp"></span> 
+		<span id="date_disp"></span>
+		<ul id="events">
+		</ul>
 	  </div><br/>
 	  <div class="right-half round">
 		<h4>Add event on the selected date:</h4><br/>
@@ -15,9 +17,11 @@
 			<p>Date: <input type="text" id="dateInput" class="form-control" name="selected_date" readonly /></p>
 			<label for="venueName">Venue:</label>
 			<select id="venueName" name="venue_name" class="form-control" required>
-			    <!-- Foreach Venue -->
-				<option value="">Select a Venue...</option>
-			    <option value="">{VenueName} - {Venue Address}</option>
+				<option value="" readonly>Select a Venue...</option>
+				<!-- Foreach Venue -->
+				{% for venue in venue_list%}
+			    <option value={{venue.VenueId}}>{{venue.Name}} - {{venue.Address}}</option>
+				{% endfor %}
 			</select>
 			<label for="courseName">Course:</label>
 			<select id="courseName" name="course_name" class="form-control" required>
@@ -44,6 +48,20 @@
 		$('#datepicker').on('changeDate', function() {
 			$('#date_disp').html( $('#datepicker').datepicker('getFormattedDate') );
 			$('#dateInput').val( $('#datepicker').datepicker('getFormattedDate') );
+
+			var fetch = 
+			$.ajax({
+				type: "POST",
+				url: "/get_events",
+				data: { "date":fetch },
+				success: function (data) {
+					$(events).html(data)
+				},
+				error: function (event, request, settings) {
+					console.log('AjaxError' + ' : ' + settings);
+				},
+				timeout: 20000
+			});
 		});
 	});
 </script>
