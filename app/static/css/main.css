@@ -123,6 +123,11 @@ code {
 }
 .clone thead, .clone tfoot{background:transparent;}
 
+ul {
+	list-style:none; 
+	padding-left:0
+}
+
 @media only screen and (max-width: 750px) {
 	.contain {
 	  display: block;

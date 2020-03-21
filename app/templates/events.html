@@ -7,12 +7,19 @@
 		  <div class="left-half round">
 		    <h2>Click the date on the calendar to show the event:</h2><br/>
             <div id="datepicker"></div><br/><br/>
-            <span id="date_disp"></span> {Events}
+            <span id="date_disp"></span>
+			<ul id="events">
+			</ul>
 		  </div><br/>
 		  <div class="right-half round">
-		    <h2>Recent Events:</h2><br/><br/>
+		    <h2>Upcoming Events:</h2><br/>
+			<ul id="upcomingEvents">
 			<!-- Foreach event start -->
-		    {Date} : {Events}<br/><br/>
+			{% for event in upcoming_events %}
+			<li>{{event.Date}} : {{event.Name}}</li>
+			{% endfor %}
+			</ul>
+			<br/>
 			<!-- Foreach event end --> 
 			<!-- ID: 1. If logged in show, else hide URL: 2. If admin goto admin, else goto editscore -->
 			<p><button type="button" class="btn btn-info form-control" id="dashboard" onclick="window.location='{{ url_for('editscore') }}'">Go to Dashboard</button></p>
@@ -26,12 +33,25 @@
 <script src="../static/js/bootstrap-datepicker.min.js"></script>
 
 <script>
-		$(document).ready(function(){
-			$('#datepicker').datepicker({format: 'M dd, yyyy', todayHighlight: 'True'});
-				$('#datepicker').on('changeDate', function() {
-					$('#date_disp').html( $('#datepicker').datepicker('getFormattedDate') );
+	$(document).ready(function(){
+		$('#datepicker').datepicker({format: 'M dd, yyyy', todayHighlight: 'True'});
+		$('#datepicker').on('changeDate', function() {
+			$('#date_disp').html( $('#datepicker').datepicker('getFormattedDate') );
+			var fetch = $('#datepicker').datepicker('getFormattedDate');
+			$.ajax({
+				type: "POST",
+				url: "/get_events",
+				data: { "date":fetch },
+				success: function (data) {
+					$(events).html(data)
+				},
+				error: function (event, request, settings) {
+					console.log('AjaxError' + ' : ' + settings);
+				},
+				timeout: 20000
 			});
 		});
+	});
 </script>
 
-{% endblock %}	
+{% endblock %}

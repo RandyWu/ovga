@@ -2,7 +2,7 @@ from app import app
 from flask import Flask, render_template, request
 from app.model.model import db,Venue,Event
 
-@app.route('/addevent', methods=['POST', 'GET'])
+@app.route('/event/addevent', methods=['POST', 'GET'])
 def addevent():
     venue_list = Venue.query.all()
     rawr = request.form
