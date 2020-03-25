@@ -1,23 +1,15 @@
-from flask_wtf import Form
+from app import app
+from flask_wtf import FlaskForm
 from wtforms import validators
-from wtforms.fields.html5 import EmailField
+from wtforms import StringField, PasswordField, validators
+from app.model.model import Admin, Player
 
-# class ContactForm(Form):
-#     email = EmailField('Email address', [validators.DataRequired(), validators.Email()])
+class LoginForm(FlaskForm):
+    email = StringField('Email', validators=[validators.DataRequired(), validators.Email()])
+    password = PasswordField('Password',  validators=[validators.DataRequired()])
 
-# class LoginForm(Form):
-#     email = StringField('Email')
-#     password = PasswordField('Password')
-
-#     def validate(self):
-
-#         if not Form.validate(self):
-#             return False
-
-#         if not self.email.data:
-#             return False
-
-#         if not self.password.data:
-#             return False
-
-#         return True
+    def validate_email(self, email):
+        admin = Admin.query.filter_by(Email=email.data).first()
+        player = Player.query.filter_by(Email=email.data).first()
+        if admin and player is not None:
+            raise ValidationError('Email not registered')

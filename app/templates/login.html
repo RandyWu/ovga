@@ -5,15 +5,19 @@
 	  <div class="right-half round">
 		<div>
 			<div class="mx-auto" style="padding: 5px;">
+				{% for error in form.email.errors %}
+				<span style="color: red;">{{ error }}</span>
+				{% endfor %}
 				<h1>Login</h1><br/><br/>
+				<form action="" method="POST">
 			    <table>
 				  <tr>
-					  <td>Username: </td>
-					  <td><input type="text" class="form-control" placeholder="Enter username"/></td>
+					  <td>Email: </td>
+					  <td>{{form.email}}</td>
 				  </tr>
 				  <tr>
 					  <td>Password: </td>
-					  <td><input type="text" class="form-control" placeholder="Enter password"/></td>
+					  <td>{{form.password}}</td>
 				  </tr>
 				  <tr>
 					  <td colspan="2">&nbsp;</td>
@@ -28,6 +32,7 @@
 					  <td colspan="2"><input type="submit" class="form-control btn btn-warning" value="General Public" href="{{ url_for('events') }}" /></td>
 				  </tr>
 				</table>
+			</form>
 			</div>
 		</div>
 	  </div>
