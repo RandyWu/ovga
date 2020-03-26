@@ -5,7 +5,7 @@
 	<div class="contain">
 	  <div class="left-half round">
 		<h4>{Username} - Add Event</h4><br/>
-		<div id="datepicker"></div><br/><br/>
+		<div id="datepicker"></div><br/>
 		<span id="date_disp"></span>
 		<ul id="events">
 		</ul>
@@ -14,19 +14,19 @@
 		<h4>Add event on the selected date:</h4><br/>
 		<form id="add_event" method="POST">
 			<p>Event Name: <input type="text" id="eventName" class="form-control" name="event_name" required /></p>
-			<p>Date: <input type="text" id="dateInput" class="form-control" name="selected_date" readonly /></p>
-			<label for="venueName">Venue:</label>
-			<select id="venueName" name="venue_name" class="form-control" required>
-				<option value="" readonly>Select a Venue...</option>
+			<p>Date: <input type="text" id="dateInput" class="form-control" name="selected_date" readonly required/></p>
+			<label for="venueList">Venue:</label>
+			<select id="venueList" name="venue_list" class="form-control" required>
+				<option value="" disabled selected>Select a Venue...</option>
 				<!-- Foreach Venue -->
 				{% for venue in venue_list%}
 			    <option value={{venue.VenueId}}>{{venue.Name}} - {{venue.Address}}</option>
 				{% endfor %}
 			</select>
-			<label for="courseName">Course:</label>
-			<select id="courseName" name="course_name" class="form-control" required>
-			    <!-- Foreach Venue -->
+			<label for="courseList">Course:</label>
+			<select id="courseList" name="course_list" class="form-control" required>
 				<option value="">Select a Course...</option>
+				<!-- Foreach Course -->
 			    <option value="">{CourseName} - {Hole number}</option>
 			</select>
 			<center><br/>
@@ -45,17 +45,34 @@
 <script>
 	$(document).ready(function(){
 		$('#datepicker').datepicker({format: 'yyyy/mm/dd', todayHighlight: 'True'});
+
 		$('#datepicker').on('changeDate', function() {
 			$('#date_disp').html( $('#datepicker').datepicker('getFormattedDate') );
 			$('#dateInput').val( $('#datepicker').datepicker('getFormattedDate') );
 
-			var fetch = 
+			var fetch = $('#dateInput').val();
 			$.ajax({
 				type: "POST",
-				url: "/get_events",
+				url: "addevents/get_event",
 				data: { "date":fetch },
 				success: function (data) {
 					$(events).html(data)
+				},
+				error: function (event, request, settings) {
+					console.log('AjaxError' + ' : ' + settings);
+				},
+				timeout: 20000
+			});
+		});
+
+		$('#venueList').change(function () {
+			var fetch = $(this).val();
+			$.ajax({
+				type: "POST",
+				url: "addevents/get_course",
+				data: { "venue":fetch },
+				success: function (response) {
+					$(courseList).html(response)
 				},
 				error: function (event, request, settings) {
 					console.log('AjaxError' + ' : ' + settings);

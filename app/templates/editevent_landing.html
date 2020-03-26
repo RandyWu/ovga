@@ -13,14 +13,16 @@
 			<p>Choose Event: 
 			  <select id="eventSelect" name="event_select" class="form-control">
 			    <!-- Foreach Event -->
-			    <option value="">{Event Name}</option>
+				{% for event in events_list%}
+			    <option value={{event.EventId}}>{{event.Name}} - {{event.Address}} - {{event.Date}}</option>
+				{% endfor %}
 			  </select>
-			</p><br/><br/>
+			</p><br/>
 				<!-- Submit changed scores to database onclick "Update/Delete Event" -->
 				<center>
 				<!-- If an event is selected then show Change Event Info & Add/Remove Player, else hide it -->
-				<button type="button" class="btn btn-primary form-control" id="change_eventinfo" onclick="window.location='{{ url_for('editevent_info') }}'">Change Event Info</button><br/><br/>
-				<button type="button" class="btn btn-success form-control" id="addrem_player" onclick="window.location='{{ url_for('editevent_player') }}'">Add/Remove Player</button><br/><br/>
+				<button type="submit" class="btn btn-primary form-control" id="change_eventinfo" name="submit" value="event">Change Event Info</button><br/><br/>
+				<button type="submit" class="btn btn-success form-control" id="addrem_player" name="submit" value="player">Add/Remove Player</button><br/><br/>
 				<button type="button" class="btn btn-info form-control" onclick="window.location='{{ url_for('events_landing') }}'"><i class="fas fa-backward"></i> Back </button><br/><br/>
 				</center>
 			</div>

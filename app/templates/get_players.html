@@ -1,0 +1,11 @@
+{% block content %}
+
+{% if success == 'TRUE' %}
+    {% for player in player_list%}
+        <option value={{player.PlayerId}}>{{player.Name}} - {{player.Email}}</option>
+    {% endfor %}
+{% else %}
+    <option>No Players registered</option>
+{% endif %}
+
+{% endblock %}

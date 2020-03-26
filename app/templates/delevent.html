@@ -11,15 +11,18 @@
 			<h6>Select an event to delete it with all players & their scores present in it:</h4><br/>
 			<!-- From Populated EventID & VenueID in Session -->
 			<p>Choose Event: 
-			  <select id="eventSelect" name="event_select" class="form-control">
+			  <select id="eventSelect" name="event_select" class="form-control" required>
+			  	<option value="" disabled>Select an Event...</option>
 			    <!-- Foreach Event -->
-			    <option value="">{Event Name}</option>
+				{% for event in event_list%}
+					<option value={{event.EventId}}>{{event.Name}} - {{event.Address}} - {{event.Date}}</option>
+				{% endfor%}
 			  </select>
 			</p><br/><br/>
 				<!-- Submit changed scores to database onclick "Update/Delete Event" -->
 				<center>
 				<!-- Delete all eventID from databases onclick Delete Event -->
-				<button type="button" class="btn btn-danger form-control" id="delevent_click">Delete Event</button><br/><br/>
+				<button type="submit" class="btn btn-danger form-control" id="delevent_click" name="submit" value="submit">Delete Event</button><br/><br/>
 				<button type="button" class="btn btn-info form-control" onclick="window.location='{{ url_for('events_landing') }}'"><i class="fas fa-backward"></i> Back </button><br/><br/>
 				</center>
 			</div>

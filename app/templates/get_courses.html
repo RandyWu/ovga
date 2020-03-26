@@ -1,0 +1,11 @@
+{% block content %}
+
+{% if success == 'TRUE' %}
+    {% for course in course_list%}
+        <option value={{course.CourseID}}>{{course.CourseName}} - {{course.Num_Holes}} Holes</option>
+    {% endfor %}
+{% else %}
+    <option>No Courses for this venue</option>
+{% endif %}
+
+{% endblock %}
