@@ -7,26 +7,29 @@
 		<h4>Update/Delete Venue:</h4><br/>
 		<form id="upd_del_venue" method="POST">
 		    <p>Select a Venue: 
-			  <select id="selectVenue" name="select_venue" class="form-control">
-			    <option value="{Venue}">{VenueID - Venue Name}</option>
+			  <select id="selectVenue" name="select_venue" class="form-control" required>
+			    <option value="" disabled selected>Select a Venue...</option>
+				<!-- Foreach Venue -->
+				{% for venue in venue_list%}
+			    <option value={{venue.VenueId}}>{{venue.Name}} - {{venue.Address}}</option>
+				{% endfor %}
 			  </select>
 			</p>
 			<!-- Onselect Venue show venue_info, else hide -->
 			<div id="venue_info">
 				<!-- Display Venue Name, Venue Address and Course Name based on selected VenueID above -->
-				<p>Venue Name: <input type="text" id="venueName" name="event_name" class="form-control" /></p>
+				<p>Venue Name: <input type="text" id="venueName" name="venue_name" class="form-control" /></p>
 				<p>Venue Address: <input type="text" id="venueAddress" name="venue_address" class="form-control" /></p>
-				<p>Course Name: <input type="text" id="courseName" name="course_name" class="form-control" /></p>
 			</div>
 			<center><br/>
-				<button type="submit" class="btn btn-success" id="updateVenue" name="update_venue" value="submit">Update Venue</button>
-				<button type="submit" class="btn btn-danger" id="deleteVenue" name="delete_venue" value="submit">Delete Venue</button>
+				<button type="submit" class="btn btn-success" id="updateVenue" name="submit" value="update">Update Venue</button>
+				<button type="submit" class="btn btn-danger" id="deleteVenue" name="submit" value="remove">Delete Venue</button>
 				<button type="button" class="btn btn-info" onclick="window.location='{{ url_for('venues_landing') }}'"><i class="fas fa-backward"></i> Back </button>
 			</center>
 		</form><br/>
 		<!--Confirmation message needs to show when page is validated-->
 		<div class="alert alert-info alert-dismissible text-center" id="alert_addgroup" role="alert">{Venue updated/deleted successfully}</div>
 	  </div>
-	</div>	
+	</div>
 </main>
 {% endblock %}
