@@ -4,17 +4,23 @@
 <main role="main" class="container">
 	<div class="contain">
 	  <div class="left-half round">
+	  <form id="editplayerinfo" method="POST">
 		<h4>Edit Players</h4><br/>
 		<p>Choose a player: 
 		   <select id="playerSelect" name="player_select" class="form-control">
-			  <!-- Foreach Player -->
-			  <option value="">{Player ID - Player Name}</option>
+		      <option value="-1">Select a player...</option>
+			  {% if success == 'TRUE' %}
+				  {% for player in players_list %}
+				  <option value="{{player.PlayerId}}">Player ID - {{player.PlayerId}}</option>
+				  {% endfor %}
+			  {% else %}
+				  <option>No Courses for this venue</option>
+			  {% endif %}
 		   </select>
 		</p> 
 	  </div><br/>
 	  <div class="right-half round">
 		<h4>Player Information:</h4><br/>
-		<form id="editplayerinfo" method="POST">
 		    <!-- On select Player show this, else hide -->
 			<div id="playerInfo">
 				<p>Player Name: <input type="text" id="playerName" name="player_name" class="form-control" required /></p>
@@ -22,13 +28,61 @@
 				<p>Player Password: <input type="password" id="playerPasswd" name="player_passwd" class="form-control" required /></p>
 			</div>
 			<center><br/>
-				<button type="submit" class="btn btn-success" id="btnSave" name="btn_save">Save</button>
+				<button type="submit" class="btn btn-success" id="btnSave" name="btn_save" value="Save">Save</button>
 				<button type="button" class="btn btn-info" onclick="window.location='{{ url_for('admin') }}'"><i class="fas fa-backward"></i> Back </button>
 			</center>
 		</form><br/>
-		<!--Confirmation message needs to show when page is validated-->
-		<div class="alert alert-info alert-dismissible text-center" id="alert_addgroup" role="alert">{Player information changed successfully}</div>
+		<!--Confirmation message needs to show when data is changed-->
+		<div class="form-control alert-info text-center" id="alertPlayerInfo">Player information changed successfully</div>
 	  </div>
 	</div>	
 </main>
+<script>
+$(document).ready(function(){
+    
+	$('#alertPlayerInfo').hide();
+
+	$('#playerSelect').change(function(event){
+		$.ajax({
+		    data: {'player_select': $("#playerSelect").val()},
+		    type: 'POST',
+		    url: '/getplayerinfo',
+			success: function(response){
+				console.log($("#playerSelect").val());
+				$('#alertPlayerInfo').hide();
+			}
+		})
+		.done(function(data){
+			if(data.error){
+				console.log("Data Error");
+			}
+			else{
+				$("#playerName").val(data.player_name);
+				$("#playerEmail").val(data.player_email);
+				$("#playerPasswd").val(data.player_passwd);
+			}
+				
+		});	
+		event.preventDefault();	
+	});
+	
+	$("#btnSave").click(function(e) {
+		e.preventDefault();
+		$.ajax({
+		    data: $("#editplayerinfo").serialize(),
+			type: "POST",
+			url: "/saveplayerinfo",
+			success: function(result) {
+				console.log("Success");
+				$('#alertPlayerInfo').show();
+			},
+			error: function(result) {
+				console.log("Error");
+			}
+		});
+    });
+	
+	
+});
+</script>
 {% endblock %}
