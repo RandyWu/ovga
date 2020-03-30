@@ -26,7 +26,7 @@
   <body>
 
       <!-- Fixed navbar -->
-      <nav class="navbar navbar-expand-sm navbar-dark fixed-top bg-dark" style="height:3em;">
+      <nav class="navbar navbar-expand-sm fixed-top bg-dark" style="height:3em;">
         <a class="navbar-brand" href="{{ url_for('index') }}"><img src="../static/img/ovga_logo.png" style="height:45px; padding-bottom: ; border-radius: 50%"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -37,10 +37,10 @@
               <a class="nav-link" href="{{ url_for('index') }}"><i class="fas fa-home" style="color:white"></i><span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('events') }}">Events</a>
+              <a class="nav-link" href="{{ url_for('events') }}">Events <i class="far fa-calendar-alt"></i></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('scores') }}">Scoring</a>
+              <a class="nav-link" href="{{ url_for('scores') }}">Scoring <i class="far fa-flag"></i></a>
             </li>
           </ul>
 		  <ul class="navbar-nav navbar-right">
