@@ -49,11 +49,12 @@
 				</table>
 			  </div>
 			</div><br/>
-			<p><button type="button" class="btn btn-primary form-control" onclick="window.location='{{ url_for('events') }}'">Change Event</button></p>
-			<!-- ID: 1. If logged in show, else hide URL: 2. If admin goto admin, else goto editscore -->
-			<p><button type="button" class="btn btn-info form-control" id="dashboard" onclick="window.location='{{ url_for('admin') }}'">Go to Dashboard</button></p>
+			<p><button type="button" class="btn btn-primary" onclick="window.location='{{ url_for('events') }}'">Change Event</button>
+			<!-- ID: 1. If logged in show, else hide URL: 2. If admin goto admin, else goto editscore --><button type="button" class="btn btn-info" id="dashboard" onclick="window.location='{{ url_for('admin') }}'">Go to Dashboard</button></p>
 		  </div>
 		</div>	
+		<br>
+		<br>
     </main>
 
 {% endblock %}

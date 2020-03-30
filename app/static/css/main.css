@@ -11,7 +11,13 @@ body {
   /* background-image: url('../img/bg.jpg') !important; */
   background: white;
 }
-
+#datepicker{
+	display:inline-block;
+	margin:0 auto;
+}
+.center {
+	text-align: -webkit-center;
+}
 .nav-link{
 	font-size: 15px;
 	margin: 5px;
@@ -41,13 +47,22 @@ body {
 	top: 50%;
 }
 
+.round{	
+	background-color: #3f56bb;	
+	color: white;
+	margin: 10px;	
+	padding: 30px;	
+	border-radius: 25px;
+	text-align: center;	
+}	
+
 .footer {
   position: absolute;
   bottom: 0;
   width: 100%;
   height: 80px; /* Set the fixed height of the footer here */
   line-height: 60px; /* Vertically center the text there */
-  background: #3f56bb;
+  background: #e48f11;
   color: white;
 }
 
@@ -80,12 +95,13 @@ code {
 	width:100%;
 	margin:auto;
 	border-collapse:separate;
-	border-spacing:0;
+	border-spacing:0;	
 }
 .table-scroll th, .table-scroll td {
 	padding:5px 10px;
 	border:1px solid #000;
-	background:#fff;
+	color:black;
+	background:rgb(255, 255, 255);
 	white-space:nowrap;
 	vertical-align:top;
 }
