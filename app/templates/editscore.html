@@ -5,54 +5,36 @@
 	<div class="contain">
 	  <div class="right-half round">
 	    <!-- href as scores/<event_id> -->
-		<h4>Event : <a href="#">{Event_ID} / {Venue_ID} - {Venue Name} @ {Venue Address}</a></h4><br/>
+		<h4>Event : <a href="#">{{event_name}} - {{event_venue}} @ {{event_address}}</a></h4><br/>
 		<form id="editscore" method="POST">
 			<h4>Select the Group & Hole to edit the scores.</h4>
 			Group: 
-			<select class="btn btn-outline-light btn-sm" name="sel_group">
-			   <!-- For each Groups -->
-			   <option>Group 1</option>
-			   <option>Group 2</option>
-			   <option>Group 3</option>
-			   <option>Group 4</option>
-			   <option>Group 5</option>
-			   <!-- If No Groups Present  -->
-			   <!-- <option>No Groups</option> -->
+			<select id="groupSelect" class="btn btn-sm" name="sel_group" required>
+				<option value="" disabled selected>Select a Group...</option>
+				<!-- For each Groups -->
+				{% for group in event_groups%}
+					<option value={{group}}>Group - {{group}}</option>
+				{% endfor %}
+				<!-- If No Groups Present  -->
+				<!-- <option>No Groups</option> -->
 			</select>&nbsp;&nbsp;
-			Hole: 
-			<select class="btn btn-outline-light btn-sm" name="sel_hole">
-			   <!-- For each Holes -->
-			   <option>Hole 1</option>
-			   <option>Hole 2</option>
-			   <option>Hole 3</option>
-			   <option>Hole 4</option>
-			   <option>Hole 5</option>
-			   <!-- If No Holes Present  -->
-			   <!-- <option>No Holes</option> -->
+			<label id="holeLabel" style="display:none">Hole:</label> 
+			<select id="holeSelect"class="btn btn-sm" name="sel_hole" required>
+				<!-- For each Holes -->
+				<option value="" disabled selected>Select a Hole...</option>
+				{% for hole in course_holes%}
+					<option value={{hole.HoleID}}>Hole {{hole.Hole_Num}}</option>
+				{% endfor %}
+				<!-- If No Holes Present  -->
+				<!-- <option>No Holes</option> -->
 			</select><br/><br/>
-			<div class="center">
-			<table class="table table-hover table-striped table-dark" style="width:50%;">
-				<tr>
-					<td>Player</td>
-					<td>Score</td>
-					<td>Match Score</td>
-				</tr>
-				<tr>
-					<td>{Player Name} {ID}</td>
-					<td>
-						<!-- Button onclick add and decrease score -->
-						<button type="button" class="btn btn-success btn-xs" onclick="">+</button>
-						<b id="">{Score}</b>
-						<button type="button" class="btn btn-danger btn-xs" onclick="">-</button>
-					</td>
-					<td>{Match Score}</td>
-				</tr>
-			</table>
+			<div id="editScores" method="POST">
+			</div>
 			<div style="width:50%">
 				<!-- Submit changed scores to database onclick "Submit Score" Disable if not admin-->
-				<p><button type="button" class="btn btn-primary" id="btn_score">Submit</button>
+				<p><button type="submit" class="btn btn-primary" name="submit" value="submit">Submit</button>
 				<!-- Destroy Event ID in Session on click "Change Event" & goto eventcal.html for admin & events.html for players -->
-				<button type="button" class="btn btn-warning" style="color:grey;" onclick="window.location='{{ url_for('events') }}'">Change Event</button></p>
+				<button type="button" class="btn btn-warning" onclick="window.location='{{ url_for('editscores_landing') }}'">Change Event</button></p>
 				
 				<p><button type="button" class="btn btn-success form-control" onclick="window.location='{{ url_for('scores') }}'">Show All Scores</button></p>
 				<!-- If logged into admin show admin_panel ID, else hide -->
@@ -65,10 +47,42 @@
 				<div class="alert alert-info alert-dismissible" id="alert_scores" role="alert">{Scores updated successfully}</div>
 				</center>
 			</div>
+			</form>
 		</div>
-		</form>
 	  </div>
 	</div>	
 	<br>
+	<script>
+	$(document).ready(function(){
+		$('#holeLabel').hide();
+		$('#holeSelect').hide();
+
+		$('#groupSelect').change(function() {
+			$('#holeLabel').show();
+			$('#holeSelect').show();
+		});
+
+		$('#holeSelect').change(function() {
+			var holeNum = $(this).val();
+			var groupNum = $('#groupSelect').val();
+
+			$.ajax({
+				type: "POST",
+				url: "editscore/getscore",
+				data:{
+					"hole":holeNum,
+					"group":groupNum
+				},
+				success: function(response) {
+					$('#editScores').html(response)
+				},
+				error: function(event, request, settings) {
+					console.log('AjaxError' + ' : ' + settings);
+				},
+				timeout: 20000
+			});
+		});
+	});
+	</script>
 </main>
 {% endblock %}

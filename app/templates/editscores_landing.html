@@ -9,14 +9,17 @@
 			<div style="width:50%">
 			<h6>Select an event to view all its players & their scores and edit them...</h4><br/>
 			<p>Choose an Event: 
-			  <select id="eventSelect" name="event_select" class="form-control">
+				<select id="eventSelect" name="event_select" class="form-control" required>
+				<option value="" disabled selected>Select an Event...</option>
 			    <!-- Foreach Event -->
-			    <option value="">{Event Name}</option>
-			  </select>
+				{% for event in event_list%}
+					<option value={{event.EventId}}>{{event.Name}} - {{event.Address}} - {{event.Date}}</option>
+				{% endfor %}
+				</select>
 			</p><br/><br/>
 				<center>
 				<!-- If selected an event go to editscore.html -->
-				<button type="button" class="btn btn-primary form-control" id="event_select" onclick="window.location='{{ url_for('editscore') }}'">Edit Scores</button><br/><br/>
+				<button type="submit" class="btn btn-primary form-control" id="event_select" name="submit" value="submit">Edit Scores</button><br/><br/>
 				<button type="button" class="btn btn-info form-control" onclick="window.location='{{ url_for('admin') }}'"><i class="fas fa-backward"></i> Back to Admin</button><br/><br/>
 				</center>
 			</div>

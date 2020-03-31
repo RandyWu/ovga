@@ -1,0 +1,18 @@
+<table class="table table-hover table-striped table-dark">
+    <tr>
+        <td><b>Player<b></td>
+        <td><b>Par<b></td>
+        <td align="center"><b>Stroke</b></td>
+        <td><b>Score</b></td>
+    </tr>
+    {% for i in range(player_list|length)%}
+    <tr>
+        <td>{{player_names[i]}}</td>
+        <td>{{par}}</td>
+        <td>
+            <input type="text" value={{stroke_list[i]}} class="form-control" name=score{{ID[i]}} style="margin-left:45%;width:10%;height:25px;text-align:center" required />
+        </td>
+        <td>{{stroke_list[i] - par }}</td>
+    </tr>
+    {% endfor %}
+</table>

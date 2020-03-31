@@ -41,7 +41,7 @@
 			var fetch = $('#datepicker').datepicker('getFormattedDate');
 			$.ajax({
 				type: "POST",
-				url: "/get_events",
+				url: "addevents/get_event",
 				data: { "date":fetch },
 				success: function (data) {
 					$(events).html(data)
