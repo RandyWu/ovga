@@ -8,8 +8,18 @@
 				{% for error in form.email.errors %}
 				<span style="color: red;">{{ error }}</span>
 				{% endfor %}
+				{% with messages = get_flashed_messages() %}
+				{% if messages %}
+					<ul class=flashes>
+					{% for message in messages %}
+					<li style="color: red;">{{ message }}</li>
+					{% endfor %}
+					</ul>
+				{% endif %}
+				{% endwith %}
 				<h1>Login</h1><br/><br/>
 				<form action="" method="POST">
+					{{ form.csrf_token }}
 			    <table>
 				  <tr>
 					  <td>Email: </td>
