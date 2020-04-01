@@ -20,13 +20,13 @@
 				<option value="" disabled selected>Select a Venue...</option>
 				<!-- Foreach Venue -->
 				{% for venue in venue_list%}
-			    <option value={{venue.VenueId}}>{{venue.Name}} - {{venue.Address}}</option>
+			    	<option value={{venue.VenueId}}>{{venue.Name}} - {{venue.Address}}</option>
 				{% endfor %}
 			</select>
 			<label for="courseList">Course:</label>
 			<select id="courseList" name="course_list" class="form-control" required>
 				<option value="">Select a Course...</option>
-				<!-- Foreach Course -->
+				<!-- Course List -->
 			    <option value="" disabled selected>Please Choose a Venue First...</option>
 			</select>
 			<center><br/>
@@ -65,6 +65,7 @@
 			});
 		});
 
+		//Populate Course List on Venue Dropdown change
 		$('#venueList').change(function () {
 			var fetch = $(this).val();
 			$.ajax({
