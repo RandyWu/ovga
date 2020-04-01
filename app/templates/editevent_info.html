@@ -28,7 +28,6 @@
 			</select>
 			<label for="courseList">Course:</label>
 			<select id="courseList" name="course_list" class="form-control" required>
-			    <option value="" disabled selected>Please Choose a Venue First...</option>
 				<!-- Foreach Course -->
 				{% for course in course_list%}
 					{% if course.CourseID == event_course%}

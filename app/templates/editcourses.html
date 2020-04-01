@@ -2,44 +2,38 @@
 {% block content %}
 <!-- Begin page content -->
 <main role="main" class="container">
+<form id="editcourses" method="POST">
 	<div class="contain">
 	  <div class="left-half round">
 		<h4>Edit Courses</h4><br/>
-		<!-- <p>Choose Venue:  -->
-		   <!-- <select id="venueSelect" name="venue_select" class="form-control"> -->
-			  <!-- <option value="">{Venue ID - Venue Name}</option> -->
-		   <!-- </select> -->
-		<!-- </p>  -->
-		<p>Choose Course: 
-		   <select id="courseSelect" name="course_select" class="form-control">
-			  <!-- Foreach Course -->
-			  <option value="">{Course ID - Course Name}</option>
-		   </select>
+		 <p>Choose Venue:  
+		    <select id="venueSelect" name="venue_select" class="form-control" required> 
+			   <option value="" disabled selected>Choose a Venue...</option>
+			   <!-- Foreach Venu e-->
+			   {% for venue in venue_list%}
+			    	<option value={{venue.VenueId}}>{{venue.Name}} - {{venue.Address}}</option>
+				{% endfor %}
+		    </select> 
+		 </p>  
+		<p id="courseLabel">Choose Course: 
+		   	<select id="courseSelect" name="course_select" class="form-control" required>
+		   		<option value="" disabled selected>Choose a Course...</option>
+		   	</select>
 		</p>
 	  </div><br/>
 	  <div class="right-half round">
 		<h4>Course Information:</h4><br/>
-		<form id="editcourses" method="POST">
 		    <!-- On select Venue & Course show this, else hide -->
 			<div id="courseInfo">
-				<p>Course Name: <input type="text" id="courseName" name="event_name" class="form-control" required /></p>
+				<p>Course Name: <input type="text" id="courseName" name="course_name" class="form-control" required /></p>
 				<!-- <p>Change No. of Holes: <input type="text" id="noOfHoles" name="no_of_holes" class="form-control" required /></p> -->
 				<p>Course Pars </p>
-				<table class='table table-sm table-hover table-dark table-striped'>
-					<tr>
-					  <th>Hole</th><th>Par</th>
-					</tr>
-					<!-- For each Hole and Par -->
-					<tr><td>{Hole 1}</td><td><input type='text' size='2' id='{par1}' name='{par_1}' /></td></tr>
-					<tr><td>{Hole 2}</td><td><input type='text' size='2' id='{par2}' name='{par_2}' /></td></tr>
-					<tr><td>{Hole 3}</td><td><input type='text' size='2' id='{par3}' name='{par_3}' /></td></tr>
-					<tr><td>{Hole 4}</td><td><input type='text' size='2' id='{par4}' name='{par_4}' /></td></tr>
-					<!-- For end -->
-				</table>
+				<div id="parInfo">
+				</div>
 			</div>
 			<center><br/>
-				<button type="submit" class="btn btn-success" id="btnSave" name="btn_save">Save</button>
-				<button type="submit" class="btn btn-danger" id="btnDelete" name="btn_delete" onclick="alert('WARNING: Are you sure you want to delete the selected course? This may delete all the scores in it');">Delete</button>
+				<button type="submit" class="btn btn-success" id="btnSave" name="submit" value="save">Save</button>
+				<button type="submit" class="btn btn-danger" id="btnDelete" name="submit" value="delete" onclick="alert('WARNING: Are you sure you want to delete the selected course? This may delete all the scores in it');">Delete Course</button>
 				<button type="button" class="btn btn-info" onclick="window.location='{{ url_for('courses_landing') }}'"><i class="fas fa-backward"></i> Back </button>
 			</center>
 		</form><br/>
@@ -47,5 +41,49 @@
 		<div class="alert alert-info alert-dismissible text-center" id="alert_addgroup" role="alert">{Course information changed successfully}</div>
 	  </div>
 	</div>	
+	<script>
+		$(document).ready(function(){
+			$('#courseLabel').hide();
+
+			$('#venueSelect').change(function() {
+				$('#courseLabel').show();
+
+				var fetch = $(this).val();
+				$.ajax({
+					type: "POST",
+					url: "addevents/get_course",
+					data: { "venue":fetch },
+					success: function (response) {
+						$('#courseSelect').html(response);
+					},
+					error: function (event, request, settings) {
+						console.log('AjaxError' + ' : ' + settings);
+					},
+					timeout: 20000
+				});
+			});
+
+			$('#courseSelect').change(function() {
+				s = $('#courseSelect option:selected').text();
+				courseName = s.substring(0, s.indexOf('-'));
+				$('#courseName').val(courseName);
+
+				var fetch = $(this).val();
+				$.ajax({
+					type: "POST",
+					url: "editcourses/getpar",
+					data: { "course":fetch },
+					success: function (response) {
+						$('#parInfo').html(response);
+					},
+					error: function (event, request, settings) {
+						console.log('AjaxError' + ' : ' + settings);
+					},
+					timeout: 20000
+				});
+			});
+
+		});
+	</script>
 </main>
 {% endblock %}

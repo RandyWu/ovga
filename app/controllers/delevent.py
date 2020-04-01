@@ -18,8 +18,7 @@ def delevent():
         if removed_scores:
             for score in removed_scores:
                 db.session.delete(score)
-
-        rawr = request.form
+                
         db.session.commit()
 
     event_list = Event.query.all()

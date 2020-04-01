@@ -1,6 +1,7 @@
 {% block content %}
 
 {% if success == 'TRUE' %}
+    <option value="" disabled selected>Choose a Course...</option>
     {% for course in course_list%}
         <option value={{course.CourseID}}>{{course.CourseName}} - {{course.Num_Holes}} Holes</option>
     {% endfor %}
