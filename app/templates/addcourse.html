@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Begin page content -->
+<main role="main" class="container">
+	  <div class="right-half round">
+		<h4>Add course on the selected venue:</h4><br/>
+		<form id="add_venue" method="POST">
+		    <p>Choose a Venue: 
+				<select id="venueSelect" name="venue_select" class="form-control" required>
+				<option value="" disabled selected>Select a Venue...</option>
+			    <!-- Foreach Venue -->
+					<option value="">{Venue ID - Venue Name}</option>
+				</select>
+			</p>
+			<p>Course Name: <input type="text" id="courseName" class="form-control" name="course_name" required /></p>
+			<p>Number of Holes: <input type="text" id="numOfHoles" class="form-control" name="no_of_holes" required /></p>
+			<center><br/>
+				<button type="submit" class="btn btn-primary" id="addVenue" name="add_venue">Add Course</button>
+				<button type="button" class="btn btn-info" onclick="window.location='{{ url_for('courses_landing') }}'"><i class="fas fa-backward"></i> Back </button>
+			</center>
+		</form><br/>
+		<!--Confirmation message needs to show when page is validated-->
+		<div class="alert alert-info alert-dismissible text-center" id="alert_addgroup" role="alert">{Course added successfully}</div>
+	  </div>
+	</div>	
+</main>
+{% endblock %}

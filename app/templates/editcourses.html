@@ -5,12 +5,11 @@
 	<div class="contain">
 	  <div class="left-half round">
 		<h4>Edit Courses</h4><br/>
-		<p>Choose Venue: 
-		   <select id="venueSelect" name="venue_select" class="form-control">
-			  <!-- Foreach Venue -->
-			  <option value="">{Venue ID - Venue Name}</option>
-		   </select>
-		</p> 
+		<!-- <p>Choose Venue:  -->
+		   <!-- <select id="venueSelect" name="venue_select" class="form-control"> -->
+			  <!-- <option value="">{Venue ID - Venue Name}</option> -->
+		   <!-- </select> -->
+		<!-- </p>  -->
 		<p>Choose Course: 
 		   <select id="courseSelect" name="course_select" class="form-control">
 			  <!-- Foreach Course -->
@@ -24,7 +23,7 @@
 		    <!-- On select Venue & Course show this, else hide -->
 			<div id="courseInfo">
 				<p>Course Name: <input type="text" id="courseName" name="event_name" class="form-control" required /></p>
-				<p>Change No. of Holes: <input type="text" id="noOfHoles" name="no_of_holes" class="form-control" required /></p>
+				<!-- <p>Change No. of Holes: <input type="text" id="noOfHoles" name="no_of_holes" class="form-control" required /></p> -->
 				<p>Course Pars </p>
 				<table class='table table-sm table-hover table-dark table-striped'>
 					<tr>
@@ -40,7 +39,8 @@
 			</div>
 			<center><br/>
 				<button type="submit" class="btn btn-success" id="btnSave" name="btn_save">Save</button>
-				<button type="button" class="btn btn-info" onclick="window.location='{{ url_for('admin') }}'"><i class="fas fa-backward"></i> Back </button>
+				<button type="submit" class="btn btn-danger" id="btnDelete" name="btn_delete" onclick="alert('WARNING: Are you sure you want to delete the selected course? This may delete all the scores in it');">Delete</button>
+				<button type="button" class="btn btn-info" onclick="window.location='{{ url_for('courses_landing') }}'"><i class="fas fa-backward"></i> Back </button>
 			</center>
 		</form><br/>
 		<!--Confirmation message needs to show when page is validated-->
