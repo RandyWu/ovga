@@ -12,16 +12,15 @@ def editscore():
 
     if session['edit_score_event']:
         if request.method == 'POST' and request.form["submit"]:
-            score_id = []
             form = request.form
-            for k,v in form.items():
-                if 'score' in k:
+            for key,value in form.items():
+                if 'score' in key:
                     #cut 'score' out of the key to leave the score id
-                    id = k[5:]
-                    new_score = int(v)
+                    id = key[5:]
+                    new_score = int(value)
                     update_score = Score.query.filter_by(ScoreId=id).first()
 
-                    update_score.Strokes = v
+                    update_score.Strokes = value
                     db.session.commit()
 
         selected_venue = Venue.query.filter_by(VenueId=selected_event.Venue_Id).first()

@@ -1,0 +1,14 @@
+<table class='table table-sm table-hover table-dark table-striped'>
+    <tr>
+        <th>Hole</th
+        ><th>Par</th>
+    </tr>
+    <!-- For each Hole and Par -->
+    {% for hole in course_holes%}
+    <tr>
+        <td>{{hole.Hole_Num}}</td>
+        <td><input id="{{hole.HoleID}}" type='text' size='2' name=Hole{{hole.HoleID}} value="{{hole.Par}}" /></td>
+    </tr>
+    {% endfor %}
+    <!-- For end -->
+</table>
