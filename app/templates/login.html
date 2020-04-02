@@ -8,15 +8,10 @@
 				{% for error in form.email.errors %}
 				<span style="color: red;">{{ error }}</span>
 				{% endfor %}
-				{% with messages = get_flashed_messages() %}
-				{% if messages %}
-					<ul class=flashes>
-					{% for message in messages %}
-					<li style="color: red;">{{ message }}</li>
-					{% endfor %}
-					</ul>
+				{% if form.errors %}
+				{{ form.errors }}
 				{% endif %}
-				{% endwith %}
+
 				<h1>Login</h1><br/><br/>
 				<form action="" method="POST">
 					{{ form.csrf_token }}
@@ -39,7 +34,7 @@
 					  <td colspan="2">&nbsp;</td>
 				  </tr>
 				  <tr>
-					  <td colspan="2"><input type="submit" class="form-control btn btn-warning" value="General Public" href="{{ url_for('events') }}" /></td>
+					  <td colspan="2"><a class="form-control btn btn-warning" href="{{ url_for('events') }}">General Public</a></td>
 				  </tr>
 				</table>
 			</form>
