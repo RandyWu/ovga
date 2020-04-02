@@ -15,6 +15,7 @@ def login():
         admin = Admin.query.filter_by(Email=form.email.data).first()
         player = Player.query.filter_by(Email=form.email.data).first()
         if (admin or player):
+            #Login admin or player
             if((Admin.query.filter_by(Email=form.email.data, Password=form.password.data).first()) or (Player.query.filter_by(Email=form.email.data, Password=form.password.data).first())):
                 flash('Successful Login')
                 if admin:
