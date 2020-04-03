@@ -22,12 +22,22 @@
 				<!-- Submit changed scores to database onclick "Update/Delete Event" -->
 				<center>
 				<!-- Delete all eventID from databases onclick Delete Event -->
-				<button type="submit" class="btn btn-danger form-control" id="delevent_click" name="submit" value="submit">Delete Event</button><br/><br/>
+				<button type="submit" class="btn btn-danger form-control" id="delevent_click" name="submit" value="submit"
+				onclick="alert('WARNING: This will delete all players and scores present in it. Are you sure, you want to delete this event?')">
+				Delete Event
+				</button><br/><br/>
 				<button type="button" class="btn btn-info form-control" onclick="window.location='{{ url_for('events_landing') }}'"><i class="fas fa-backward"></i> Back </button><br/><br/>
 				</center>
+				<!--Confirmation message needs to show when page is validated-->
+		        <div class="alert-danger form-control text-center" id="alertDeleteEvent" style="display:none">Event deleted successfully</div>
 			</div>
-		</form>
+		</form><br/>
 	  </div>
 	</div>	
 </main>
+<script>
+	$("#delevent").submit(function(){
+	  $("#alertDeleteEvent").css("display", "block");
+	});
+</script>
 {% endblock %}

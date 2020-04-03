@@ -11,10 +11,12 @@
 		</ul>
 	  </div><br/>
 	  <div class="right-half round">
-		<h4>Add event on the selected date:</h4><br/>
+		<h4>Add event by selecting date on the calendar:</h4><br/>
 		<form id="add_event" method="POST">
-			<p>Event Name: <input type="text" id="eventName" class="form-control" name="event_name" required /></p>
-			<p>Date: <input type="text" id="dateInput" class="form-control" name="selected_date" readonly required/></p>
+			<p>Event Name: <input type="text" id="eventName" class="form-control" name="event_name" maxlength="256" pattern="\S+.*" 
+			                      title="Event Name shouldn't be empty or start with a whitespace" required /></p>
+			<p>Date: <input type="text" id="dateInput" class="form-control" name="selected_date" onkeypress="return false;" onkeydown="return false;"
+                    	    pattern="\d{4}-\d{2}-\d{2}" title="Select a date from the calendar on the left. (Date format: YYYY-MM-DD)" required /></p>
 			<label for="venueList">Venue:</label>
 			<select id="venueList" name="venue_list" class="form-control" required>
 				<option value="" disabled selected>Select a Venue...</option>
@@ -35,7 +37,7 @@
 			</center>
 		</form><br/>
 		<!--Confirmation message needs to show when page is validated-->
-		<div class="alert alert-info alert-dismissible text-center" id="alert_addgroup" role="alert">{Event added successfully}</div>
+		<div class="form-control alert-warning text-center" id="alert_addgroup" style="display:none">Event added successfully</div>
 	  </div>
 	</div>	
 </main>
@@ -44,6 +46,12 @@
 <script src="../static/js/bootstrap-datepicker.min.js"></script>
 <script>
 	$(document).ready(function(){
+	
+	    $("#add_event").submit(function(){
+		  $("#alert_addgroup").css("display", "block");
+		});
+
+
 		$('#datepicker').datepicker({format: 'yyyy/mm/dd', todayHighlight: 'True'});
 
 		$('#datepicker').on('changeDate', function() {

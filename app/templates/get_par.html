@@ -7,7 +7,8 @@
     {% for hole in course_holes%}
     <tr>
         <td>{{hole.Hole_Num}}</td>
-        <td><input id="{{hole.HoleID}}" type='text' size='2' name=Hole{{hole.HoleID}} value="{{hole.Par}}" /></td>
+        <td align="center"><input id="{{hole.HoleID}}" type='number' size='2' min="0" max="100" 
+		    style="border-radius:5%; text-align:center" name=Hole{{hole.HoleID}} value="{{hole.Par}}" required /></td>
     </tr>
     {% endfor %}
     <!-- For end -->

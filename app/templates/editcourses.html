@@ -25,7 +25,8 @@
 		<h4>Course Information:</h4><br/>
 		    <!-- On select Venue & Course show this, else hide -->
 			<div id="courseInfo">
-				<p>Course Name: <input type="text" id="courseName" name="course_name" class="form-control" required /></p>
+				<p>Course Name: <input type="text" id="courseName" name="course_name" class="form-control" maxlength="256" pattern="\S+.*" 
+			                           title="Course Name shouldn't be empty or start with a whitespace" required /></p>
 				<!-- <p>Change No. of Holes: <input type="text" id="noOfHoles" name="no_of_holes" class="form-control" required /></p> -->
 				<p>Course Pars </p>
 				<div id="parInfo">
@@ -38,11 +39,16 @@
 			</center>
 		</form><br/>
 		<!--Confirmation message needs to show when page is validated-->
-		<div class="alert alert-info alert-dismissible text-center" id="alert_addgroup" role="alert">{Course information changed successfully}</div>
+		<div class="alert-warning form-control text-center" id="alertCourseInfo" style="display:none">Course Information changed/deleted successfully</div>
 	  </div>
 	</div>	
 	<script>
 		$(document).ready(function(){
+		    
+		    $("#editcourses").submit(function(){
+				$("#alertCourseInfo").css("display", "block");
+			});
+			
 			$('#courseLabel').hide();
 
 			$('#venueSelect').change(function() {

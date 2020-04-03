@@ -9,11 +9,14 @@
 		<span id="date_disp"></span> 
 	  </div><br/>
 	  <div class="right-half round">
-		<h4>Event Information:</h4><br/>
+		<h4>Event Information: (Change date from the calendar on left side)</h4><br/>
 		<form id="editevent_info" method="POST">
 		    <!-- Display Event Name, Date and Course Name based on selected EventID in Session -->
-			<p>Event Name: <input type="text" id="eventName" class="form-control" name="event_name" value="{{event_name}}" required /></p>
-			<p>Date: <input type="text" id="dateInput" class="form-control readonly" name="event_date" value="{{event_date}}"required readonly/></p>
+			<p>Event Name: <input type="text" id="eventName" class="form-control" name="event_name" maxlength="256" pattern="\S+.*" 
+			                      title="Event Name shouldn't be empty or start with a whitespace" value="{{event_name}}" required /></p>
+			<p>Date: <input type="text" id="dateInput" class="form-control readonly" name="event_date" value="{{event_date}}" 
+			                onkeypress="return false;" onkeydown="return false;" pattern="\d{4}-\d{2}-\d{2}" 
+							title="Select a date from the calendar on the left. (Date format: YYYY-MM-DD)" required /></p>
 			<label for="venueList">Venue:</label>
 			<select id="venueList" name="venue_list" class="form-control" required>
 				<option value="" disabled selected>Select a Venue...</option>
@@ -44,7 +47,7 @@
 			</center>
 		</form><br/>
 		<!--Confirmation message needs to show when page is validated-->
-		<div class="alert alert-info alert-dismissible text-center" id="alert_addgroup" role="alert">{Event information changed successfully}</div>
+		<div class="alert-warning form-control text-center" id="alertEditEvent" style="display:none">Event information changed successfully</div>
 	  </div>
 	</div>	
 </main>
@@ -53,6 +56,11 @@
 <script src="../static/js/bootstrap-datepicker.min.js"></script>
 <script>
 	$(document).ready(function(){
+	
+	    $("#editevent_info").submit(function(){
+		  $("#alertEditEvent").css("display", "block");
+		});
+		
 		$('#datepicker').datepicker({format: 'yyyy/mm/dd', todayHighlight: 'True'});
 		$('#datepicker').on('changeDate', function() {
 			$('#date_disp').html( $('#datepicker').datepicker('getFormattedDate') );

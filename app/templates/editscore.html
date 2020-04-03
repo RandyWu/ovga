@@ -32,10 +32,9 @@
 			</div>
 			<div style="width:50%">
 				<!-- Submit changed scores to database onclick "Submit Score" Disable if not admin-->
-				<p><button type="submit" class="btn btn-primary" name="submit" value="submit">Submit</button>
+				<p><button type="submit" class="btn btn-primary form-control" name="submit" value="submit">Submit</button></p>
 				<!-- Destroy Event ID in Session on click "Change Event" & goto eventcal.html for admin & events.html for players -->
-				<button type="button" class="btn btn-warning" onclick="window.location='{{ url_for('editscores_landing') }}'">Change Event</button></p>
-				
+				<p><button type="button" class="btn btn-warning form-control" onclick="window.location='{{ url_for('editscores_landing') }}'">Change Event</button></p>
 				<p><button type="button" class="btn btn-success form-control" onclick="window.location='{{ url_for('scores') }}'">Show All Scores</button></p>
 				<!-- If logged into admin show admin_panel ID, else hide -->
 				<p id="admin_panel">
@@ -44,7 +43,7 @@
 				  </button>
 				</p>
 				<center>
-				<div class="alert alert-info alert-dismissible" id="alert_scores" role="alert">{Scores updated successfully}</div>
+				<div class="form-control alert-warning" id="alert_scores" style="display:none">Scores updated successfully</div>
 				</center>
 			</div>
 			</form>
@@ -54,6 +53,11 @@
 	<br>
 	<script>
 	$(document).ready(function(){
+	
+	    $("form").submit(function(){
+		  $("#alert_scores").css("display", "block");
+		});
+		
 		$('#holeLabel').hide();
 		$('#holeSelect').hide();
 
