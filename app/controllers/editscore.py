@@ -65,4 +65,3 @@ def getscore():
     hole_par = hole_par.Par
 
     return render_template('populate_scores.html',player_list=players,player_names=player_names,par=hole_par,stroke_list=score_list,ID=id_list)
-    
