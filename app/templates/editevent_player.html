@@ -37,7 +37,6 @@
 			<p id="groupSelect">Choose Group: 
 			  <select name="group_select" class="form-control">
 			    <!-- Foreach Group in Event -->
-			    <option value="">{Group 1}</option>
 			  </select>
 			</p>
 			<center><br/>
@@ -53,21 +52,44 @@
 
 	<script>
 		$(document).ready(function(){
-		$('#action_select').change(function () {
-			var fetch = $(this).val();
-			$.ajax({
-				type: "POST",
-				url: "editevent_player/registered_users",
-				data: { "action":fetch },
-				success: function (response) {
-					$(player_select).html(response)
-				},
-				error: function (event, request, settings) {
-					console.log('AjaxError' + ' : ' + settings);
-				},
-				timeout: 20000
+			$('#playerSelect').hide();
+			$('#groupSelect').hide();
+
+			$('#action_select').change(function () {
+				$('#playerSelect').show();
+
+				var fetch = $(this).val();
+				$.ajax({
+					type: "POST",
+					url: "editevent_player/registered_users",
+					data: { "action":fetch },
+					success: function (response) {
+						$(player_select).html(response)
+					},
+					error: function (event, request, settings) {
+						console.log('AjaxError' + ' : ' + settings);
+					},
+					timeout: 20000
+				});
 			});
-		});
+
+			$('#player_select').change(function () {
+				$('#groupSelect').show();
+
+				var fetch = $(this).val();
+				$.ajax({
+					type: "POST",
+					url: "editevent_player/registered_users",
+					data: { "action":fetch },
+					success: function (response) {
+						$(player_select).html(response)
+					},
+					error: function (event, request, settings) {
+						console.log('AjaxError' + ' : ' + settings);
+					},
+					timeout: 20000
+				});
+			});
 	});
 	</script>
 </main>
