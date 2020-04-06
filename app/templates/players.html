@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Begin page content -->
+<main role="main" class="container">
+	<div class="contain">
+	  <div class="right-half round">
+	    <!-- Href to scores/<event_id> -->
+		<h4>{PlayerID} - {Player Name}</h4><br/><br/>
+		<div style="width:50%">
+		    <h4><i class="fas fa-users"></i> User Panel : </h4><br/>
+			<p><button type="button" name="btn_editscores" class="btn btn-primary form-control" onclick="window.location='{{ url_for('editplayerscore') }}'">Edit Scores (Choose Event, Edit Scores)</button></p>
+			<p><button type="button" name="btn_editplayers" class="btn btn-primary form-control" onclick="window.location='{{ url_for('editplayerpersonal') }}'">Edit Personal (Change Password, Email, Name)</button></p>
+			<p><button type="button" name="btn_editcourses" class="btn btn-primary form-control" onclick="window.location='{{ url_for('scores') }}'">View Scores</button></p>
+		</div>
+	  </div>
+	</div>	
+</main>
+{% endblock %}

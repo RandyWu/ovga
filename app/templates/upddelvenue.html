@@ -10,16 +10,22 @@
 			  <select id="selectVenue" name="select_venue" class="form-control" required>
 			    <option value="" disabled selected>Select a Venue...</option>
 				<!-- Foreach Venue -->
-				{% for venue in venue_list%}
-			    <option value={{venue.VenueId}}>{{venue.Name}} - {{venue.Address}}</option>
-				{% endfor %}
+				{% if success == 'TRUE' %}
+					{% for venue in venue_list%}
+					<option value="{{venue.VenueId}}">{{venue.Name}} - {{venue.Address}}</option>
+					{% endfor %}
+				{% else %}
+				  <option value="" disabled>No venues are present</option>
+			    {% endif %}
 			  </select>
 			</p>
 			<!-- Onselect Venue show venue_info, else hide -->
 			<div id="venue_info">
 				<!-- Display Venue Name, Venue Address and Course Name based on selected VenueID above -->
-				<p>Venue Name: <input type="text" id="venueName" name="venue_name" class="form-control" /></p>
-				<p>Venue Address: <input type="text" id="venueAddress" name="venue_address" class="form-control" /></p>
+				<p>Venue Name: <input type="text" id="venueName" name="venue_name" class="form-control" maxlength="256" pattern="\S+.*" 
+			                          title="Venue Name shouldn't be empty or start with a whitespace" required /></p>
+				<p>Venue Address: <input type="text" id="venueAddress" name="venue_address" class="form-control" maxlength="256" pattern="\S+.*" 
+			                             title="Venue Address shouldn't be empty or start with a whitespace" required /></p>
 			</div>
 			<center><br/>
 				<button type="submit" class="btn btn-success" id="updateVenue" name="submit" value="update">Update Venue</button>
@@ -28,8 +34,49 @@
 			</center>
 		</form><br/>
 		<!--Confirmation message needs to show when page is validated-->
-		<div class="alert alert-info alert-dismissible text-center" id="alert_addgroup" role="alert">{Venue updated/deleted successfully}</div>
+		<div class="alert-warning form-control text-center" id="alertEditVenue" style="display:none">Venue updated successfully</div>
+		<div class="alert-danger form-control text-center" id="alertDeleteVenue" style="display:none">Venue deleted successfully</div>
 	  </div>
 	</div>
 </main>
+<script>
+$(document).ready(function(){
+
+    $("#updateVenue").click(function(){
+		$("form").submit(function(){
+		  $("#alertEditVenue").css("display", "block");
+		});
+	});
+	
+	$("#deleteVenue").click(function(){
+		$("form").submit(function(){
+		  $("#alertDeleteVenue").css("display", "block");
+		});
+	});
+	
+	$('#selectVenue').change(function(event){
+		$.ajax({
+			data: {'select_venue': $("#selectVenue").val()},
+			type: 'POST',
+			url: '/getvenueinfo',
+			success: function(response){
+				console.log($("#selectVenue").val());
+				$('#alertEditVenue').hide();
+			}
+		})
+		.done(function(data){
+			if(data.error){
+				console.log("Data Error");
+			}
+			else{
+				$("#venueName").val(data.venue_name);
+				$("#venueAddress").val(data.venue_address);
+			}
+				
+		});	
+		event.preventDefault();	
+    });
+	
+});
+</script>
 {% endblock %}

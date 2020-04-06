@@ -3,7 +3,13 @@ from sqlalchemy import Column, DateTime, ForeignKey, Integer, String, Table
 from sqlalchemy.orm import relationship
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
+from app import login
 
+# Needed for login functionality
+@login.user_loader
+def load_user(id):
+    return User.query.get(int(id))
 
 db = SQLAlchemy()
 

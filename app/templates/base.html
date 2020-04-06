@@ -44,10 +44,25 @@
             </li>
           </ul>
 		  <ul class="navbar-nav navbar-right">
-		    <li><a class="nav-link" href="{{ url_for('login') }}">Login <i class="fas fa-sign-in-alt"></i></a></li>
-		  </ul>
+        <!-- Determines if user is logged in to change option -->
+        {% if current_user.is_authenticated %}
+        <li><a class="nav-link" href="{{ url_for('logout') }}">Logout <i class="fas fa-sign-out-alt"></i></a></li>
+        {% else %} 
+        <li><a class="nav-link" href="{{ url_for('login') }}">Login <i class="fas fa-sign-in-alt"></i></a></li>
+        {% endif %}
+      </ul>
         </div>
       </nav>
+      <br>
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class=flashes>
+        {% for message in messages %}
+        <li style="text-align:center;color: red;">{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+      {% endwith %}
 {% block content %}
 
 {% endblock %}

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Begin page content -->
+<main role="main" class="container">
+<form id="editplayerscore" method="POST">
+	<div class="contain">
+	  <div class="left-half round">
+		<h4>Edit Score</h4><br/>
+		 <p>Player:  
+		    <!-- Display the logged in PlayerID with their Name -->
+		    <div id="playerIdName" class="form-control">{Player ID - Player Name}</div> 
+		 </p>  
+	  </div><br/>
+	  <div class="right-half round">
+		<h4>Score Information:</h4><br/>
+		    <!-- On select Venue & Course show this, else hide -->
+			<div id="courseInfo">
+				<p>Player Name: <div id="playerName" name="player_name" class="form-control">{Player Name}</div></p>
+				<!-- <p>Change No. of Holes: <input type="text" id="noOfHoles" name="no_of_holes" class="form-control" required /></p> -->
+				<p>Course Pars </p>
+				<div id="scoreInfo" style="height:156.8px; overflow:auto">
+					<table class='table table-sm table-hover table-dark table-striped'>
+						<tr>
+							<th>Hole</th>
+							<th>Score</th>
+						</tr>
+						<!-- For each player, display their scores with hole no. -->
+						<tr>
+							<td>{Hole No}</td>
+							<td align="center">
+							<input id="playerScore" name="player_score" type='number' size='2' min="0" max="100" 
+							       style="border-radius:5%; text-align:center" value="{Scores}" required />
+						    </td>
+						</tr>
+						<!-- For end -->
+					</table>
+				</div>
+			</div>
+			<center><br/>
+				<button type="submit" class="btn btn-success" id="btnSave" name="submit" value="save">Save</button>
+				<button type="button" class="btn btn-info" onclick="window.location='{{ url_for('players') }}'"><i class="fas fa-backward"></i> Back </button>
+			</center>
+		</form><br/>
+		<!--Confirmation message needs to show when page is validated-->
+		<div class="alert-warning form-control text-center" id="alertPlayerScore" style="display:none">Scores changed successfully</div>
+	  </div>
+	</div>	
+</main>
+<script>
+$(document).ready(function(){		    
+	$("#editplayerscore").submit(function(){
+		$("#alertPlayerScore").css("display", "block");
+	});
+});
+</script>
+{% endblock %}

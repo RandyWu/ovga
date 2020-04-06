@@ -27,4 +27,8 @@ def addcourse():
         db.session.commit()
 
     venue_list = Venue.query.all()
-    return render_template("addcourse.html", venue_list=venue_list)
+    if len(venue_list) != 0:
+        success = 'TRUE'
+    else:
+        success = 'FALSE'
+    return render_template("addcourse.html", venue_list=venue_list, success=success)
