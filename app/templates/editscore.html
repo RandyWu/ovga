@@ -9,7 +9,11 @@
 		<form id="editscore" method="POST">
 			<h4>Select the Group & Hole to edit the scores.</h4>
 			Group: 
+<<<<<<< Updated upstream
 			<select id="groupSelect" class="btn btn-sm" name="sel_group" required>
+=======
+			<select id="groupSelect" class="btn btn-outline-primary btn-sm" name="sel_group">
+>>>>>>> Stashed changes
 				<option value="" disabled selected>Select a Group...</option>
 				<!-- For each Groups -->
 				{% for group in event_groups%}
@@ -19,7 +23,11 @@
 				<!-- <option>No Groups</option> -->
 			</select>&nbsp;&nbsp;
 			<label id="holeLabel" style="display:none">Hole:</label> 
+<<<<<<< Updated upstream
 			<select id="holeSelect"class="btn btn-sm" name="sel_hole" required>
+=======
+			<select id="selectHole"class="btn btn-outline-primary btn-sm" name="sel_hole" style="display:none">
+>>>>>>> Stashed changes
 				<!-- For each Holes -->
 				<option value="" disabled selected>Select a Hole...</option>
 				{% for hole in course_holes%}
@@ -28,8 +36,29 @@
 				<!-- If No Holes Present  -->
 				<!-- <option>No Holes</option> -->
 			</select><br/><br/>
+<<<<<<< Updated upstream
 			<div id="editScores" method="POST">
 			</div>
+=======
+			<form id="editscores" method="POST">
+				<table class="table table-hover table-striped table-dark" style="width:50%">
+					<tr>
+						<td>Player</td>
+						<td>Par</td>
+						<td align="center">Stroke</td>
+						<td>Score</td>
+					</tr>
+					<tr>
+						<td>{Player Name} {ID}</td>
+						<td>{Par}</td>
+						<td>
+							<input type="text" id="playerscore" class="form-control" name="player_score" style="margin-left:40%;width:20%;height:25px;text-align:center" required />
+						</td>
+						<td>-2</td>
+					</tr>
+				</table>
+			</form>
+>>>>>>> Stashed changes
 			<div style="width:50%">
 				<!-- Submit changed scores to database onclick "Submit Score" Disable if not admin-->
 				<p><button type="submit" class="btn btn-primary form-control" name="submit" value="submit">Submit</button></p>
