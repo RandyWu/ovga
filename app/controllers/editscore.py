@@ -1,17 +1,12 @@
 from app import app
 from flask import Flask, session,render_template,request,redirect, url_for
-<<<<<<< Updated upstream
 from app.model.model import db,Event,Score,Venue,PlayerDivision,Hole,Player
-=======
-from app.model.model import db,Event,Score,Venue,PlayerDivision,Hole
->>>>>>> Stashed changes
 
 #TODO: The input fields where the player strokes are need validation to accept valid inputs
 #TODO: The submit button needs to have validation as well
 
 @app.route('/editscore', methods=['POST', 'GET'])
 def editscore():
-<<<<<<< Updated upstream
     session_event = int(session['edit_score_event'])    
     selected_event = Event.query.filter_by(EventId=session_event).first()
 
@@ -28,11 +23,6 @@ def editscore():
                     update_score.Strokes = value
                     db.session.commit()
 
-=======
-    if session['edit_score_event']:
-        session_event = int(session['edit_score_event'])
-        selected_event = Event.query.filter_by(EventId=session_event).first()
->>>>>>> Stashed changes
         selected_venue = Venue.query.filter_by(VenueId=selected_event.Venue_Id).first()
         
         event_name = selected_event.Name
@@ -47,7 +37,6 @@ def editscore():
         distinct_groups = list(set(distinct_groups))
         distinct_groups.sort()
 
-<<<<<<< Updated upstream
     return render_template("editscore.html",event_name=event_name,event_address=event_address,event_venue=event_venue,event_groups=distinct_groups,course_holes=course_holes)
 
 @app.route('/editscore/getscore', methods=['POST', 'GET'])
@@ -76,6 +65,3 @@ def getscore():
     hole_par = hole_par.Par
 
     return render_template('populate_scores.html',player_list=players,player_names=player_names,par=hole_par,stroke_list=score_list,ID=id_list)
-=======
-    return render_template("editscore.html",event_name=event_name,event_address=event_address,event_venue=event_venue,event_groups=distinct_groups,course_holes=course_holes)
->>>>>>> Stashed changes
