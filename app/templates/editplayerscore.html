@@ -5,10 +5,20 @@
 <form id="editplayerscore" method="POST">
 	<div class="contain">
 	  <div class="left-half round">
-		<h4>Edit Score</h4><br/>
-		 <p>Player:  
+		<h4>Registered Events</h4><br/>
+		 <p>Choose an event:  
 		    <!-- Display the logged in PlayerID with their Name -->
-		    <div id="playerIdName" class="form-control">{Player ID - Player Name}</div> 
+		    <select id="selectEvent" name="select_event" class="form-control" required>
+				<!-- Foreach Event -->
+				{% if registered_events%}
+					<option value="" disabled selected>Select an event to edit your scores in...</option>
+					{% for event in registered_events%}
+						<option value="{{event.EventId}}">{{event.Name}} - {{event.Venue.Address}}</option>
+					{% endfor %}
+				{% else %}
+					<option value="" disabled selected>Currently not registered to any events</option>
+				{% endif %}
+			  </select>
 		 </p>  
 	  </div><br/>
 	  <div class="right-half round">
@@ -17,23 +27,8 @@
 			<div id="courseInfo">
 				<p>Player Name: <div id="playerName" name="player_name" class="form-control">{Player Name}</div></p>
 				<!-- <p>Change No. of Holes: <input type="text" id="noOfHoles" name="no_of_holes" class="form-control" required /></p> -->
-				<p>Course Pars </p>
+				<p id="scoreLabel">Your Scores:</p>
 				<div id="scoreInfo" style="height:156.8px; overflow:auto">
-					<table class='table table-sm table-hover table-dark table-striped'>
-						<tr>
-							<th>Hole</th>
-							<th>Score</th>
-						</tr>
-						<!-- For each player, display their scores with hole no. -->
-						<tr>
-							<td>{Hole No}</td>
-							<td align="center">
-							<input id="playerScore" name="player_score" type='number' size='2' min="0" max="100" 
-							       style="border-radius:5%; text-align:center" value="{Scores}" required />
-						    </td>
-						</tr>
-						<!-- For end -->
-					</table>
 				</div>
 			</div>
 			<center><br/>
@@ -47,10 +42,33 @@
 	</div>	
 </main>
 <script>
-$(document).ready(function(){		    
+$(document).ready(function(){	
+	$("#scoreLabel").hide();
+	$('#scoreInfo').hide();
+		    
+	$("#selectEvent").change(function (){
+		$("#scoreLabel").show();
+		$('#scoreInfo').show();
+
+		var fetch = $(this).val();
+		$.ajax({
+			type: "POST",
+			url: "/editplayerscore/getplayerscores",
+			data: { "event":fetch },
+			success: function (response) {
+				$('#scoreInfo').html(response);
+			},
+			error: function (event, request, settings) {
+				console.log('AjaxError' + ' : ' + settings);
+			},
+			timeout: 20000
+		});
+	});
+
 	$("#editplayerscore").submit(function(){
 		$("#alertPlayerScore").css("display", "block");
 	});
+
 });
 </script>
 {% endblock %}

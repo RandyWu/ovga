@@ -1,0 +1,17 @@
+<table class='table table-sm table-hover table-dark table-striped'>
+    <tr>
+        <th>Hole</th>
+        <th>Score</th>
+    </tr>
+    <!-- For each score-->
+    {% for i in range(1, player_scores|length +1) %}
+        <tr>
+            <td>Hole {{i}}</td>
+            <td align="center">
+            <input id='Hole{{player_scores[i-1].ScoreId}}' name='Hole{{player_scores[i-1].ScoreId}}' type='number' size='2' min="-20" max="20" 
+                style="border-radius:5%; text-align:center" value="{{player_scores[i-1].Strokes}}" required />
+            </td>
+        </tr>
+    {% endfor %}
+    <!-- For end -->
+</table>
