@@ -60,15 +60,15 @@ body {
   position: fixed;
   bottom: 0;
   width: 100%;
-  height: 80px; /* Set the fixed height of the footer here */
-  line-height: 60px; /* Vertically center the text there */
+  height: 52.4px; /* Set the fixed height of the footer here */
+  line-height: 52.4px; /* Vertically center the text there */
   background: #e48f11;
   color: white;
 }
 
 body > .container {
   padding: 20px;
-  margin-bottom: 80px;
+  margin: 52.4px auto;
 }
 
 .footer > .container {
@@ -137,7 +137,7 @@ ul {
 	padding-left:0
 }
 
-@media only screen and (max-width: 750px) {
+@media only screen and (max-width: 768px) {
 	.contain {
 	  display: block;
 	  width: 100%;
