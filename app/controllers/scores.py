@@ -1,11 +1,12 @@
 from app import app
+from flask import Flask,session,render_template,request,redirect,url_for
 from app.model.model import *
-from flask import Flask, render_template
+from flask_login import current_user, login_user
 
-@app.route('/scores')
-def scores():
-    event_id = 1
-    course_id = 1
+@app.route('/scores/<event_id>')
+def scores(event_id):
+    event_course = Event.query.filter_by(CourseID=event_id).first()
+    course_id = event_course.CourseID
 
     all_players = PlayerDivision.query.filter_by(Event_Id=event_id).all()
     all_divisions = Division.query.filter_by(EventID=event_id).distinct().all()
@@ -14,7 +15,6 @@ def scores():
     score_totals = {}
     for divisions in all_divisions:
         page_info[divisions.DivisionID] = {}
-        # page_info[divisions.DivisionID].update({})
 
     for player in all_players:
         page_info[player.Division_Id].update({player.Player_Id:{}})
@@ -24,9 +24,6 @@ def scores():
             page_info[player.Division_Id][player.Player_Id].update({score.HoleID : score.Strokes})
 
         score_totals.update({player.Player_Id : sum(page_info[player.Division_Id][player.Player_Id].values())})
-        
-
-    # course = Course.query.filter_by(CourseID=course_id).first()
 
     holes = Hole.query.filter_by(CourseID=course_id).order_by(Hole.Hole_Num.asc())
     
@@ -52,4 +49,4 @@ def scores():
         par_list = par_list, 
         par_total = par_total,
         score_totals = score_totals
-        )
+    )

@@ -9,7 +9,7 @@ def choose_event():
 
     if request.method == 'POST' and request.form['submit']:
         selected_event = int(request.form.get('event_select'))
-        return redirect(url_for('scores'))
+        return redirect(url_for('scores',event_id=selected_event))
 
     registered_events = PlayerDivision.query.filter_by(Player_Id=user).all()
     registered_players = PlayerDivision.query.filter_by(Player_Id=user).distinct().all()

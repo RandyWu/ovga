@@ -37,7 +37,14 @@ def editscore():
         distinct_groups = list(set(distinct_groups))
         distinct_groups.sort()
 
-    return render_template("editscore.html",event_name=event_name,event_address=event_address,event_venue=event_venue,event_groups=distinct_groups,course_holes=course_holes)
+    return render_template("editscore.html",
+        event_name=event_name,
+        event_address=event_address,
+        event_venue=event_venue,
+        event_groups=distinct_groups,
+        course_holes=course_holes,
+        event=selected_event
+    )
 
 @app.route('/editscore/getscore', methods=['POST', 'GET'])
 def getscore():

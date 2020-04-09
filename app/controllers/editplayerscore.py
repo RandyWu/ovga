@@ -6,7 +6,7 @@ from flask_login import current_user, login_user
 @app.route('/editplayerscore', methods=['POST', 'GET'])
 def editplayerscore():
     user = current_user.UserId
-    if request.method == 'POST' and request.form.get('submit'):
+    if request.method == 'POST' and request.form['submit']:
         selected_event = int(request.form.get('select_event'))
         
         form = request.form
