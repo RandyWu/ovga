@@ -109,12 +109,18 @@ class User(db.Model, UserMixin):
     UserId = db.Column(db.Integer, primary_key=True)
     Role = db.Column(db.String(30), nullable=False)
 
+    def get_id(self):
+        return (self.UserId)
+
 class Admin(User):
     __tablename__ = 'Admins'
-
+#intentional naming choice for Admin_Id - this is compatiable with the other groups program
     Admin_Id = db.Column(db.ForeignKey('Users.UserId'), primary_key=True)
     Password = db.Column(db.String(256), nullable=False)
     Email = db.Column(db.String(256), nullable=False)
+
+    def get_id(self):
+        return (self.Admin_Id)
 
 class Player(User):
     __tablename__ = 'Players'
