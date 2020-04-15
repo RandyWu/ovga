@@ -3,7 +3,7 @@ from flask import Flask, render_template, redirect, flash, request, url_for
 from app.controllers.forms import LoginForm
 from app import login
 from flask_login import current_user, login_user
-from app.model.model import Admin, Player, load_user
+from app.model.model import Admin, Player, User
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -12,17 +12,18 @@ def login():
         return redirect(url_for('index'))
     form = LoginForm()
     if form.validate_on_submit():
-        admin = Admin.query.filter_by(Email=form.email.data).first()
-        player = Player.query.filter_by(Email=form.email.data).first()
-        if (admin or player):
+        user = User.query\
+            .join(Player, Player.PlayerId==User.UserId)\
+            .filter_by(Email=form.email.data).first()
+        if (user):
             #Login admin or player
-            if((Admin.query.filter_by(Email=form.email.data, Password=form.password.data).first()) or (Player.query.filter_by(Email=form.email.data, Password=form.password.data).first())):
-                flash('Successful Login')
-                if admin:
-                    login_user(admin)
-                if player:
-                    login_user(player)
-                return redirect(url_for('index'))
+            flash('Successful Login')
+            if user.Role == 'Admin':
+                login_user(user)
+                return redirect(url_for('admin'))
+            elif user.Role == 'Player':
+                login_user(user)
+                return redirect(url_for('players'))
             else:
                 flash('Incorrect password')
                 return redirect(url_for('login'))    
