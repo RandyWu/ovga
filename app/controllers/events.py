@@ -6,7 +6,7 @@ from app.model.model import Admin, Player, User, Event, Score, PlayerDivision, V
 @app.route('/events')
 def events():
     upcoming_events = Event.query.order_by(Event.Date.desc()).limit(10).all()
-    return render_template("events.html", upcoming_events = upcoming_events)
+    return render_template("/events/events.html", upcoming_events = upcoming_events)
 
 @app.route('/events/home')
 def events_landing():
