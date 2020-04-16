@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Begin page content -->
+<main role="main" class="container">
+	  <div class="right-half round">
+		<h4>Add venue by entering its name and address:</h4><br/>
+		<form id="add_venue" method="POST">
+			<p>Venue Name: <input type="text" id="venueName" class="form-control" name="venue_name" maxlength="256" pattern="\S+.*" 
+			                      title="Name shouldn't be empty or start with a whitespace" required /></p>
+			<p>Venue Address: <input type="text" id="venueAddress" class="form-control" name="venue_address" maxlength="256" pattern="\S+.*" 
+			                         title="Address shouldn't be empty or start with a whitespace" required /></p>
+			<center><br/>
+				<button type="submit" class="btn btn-primary" id="addVenue" name="add_venue">Add Venue</button>
+				<button type="button" class="btn btn-info" onclick="window.location='{{ url_for('venues_landing') }}'"><i class="fas fa-backward"></i> Back </button>
+			</center>
+		</form><br/>
+		<!--Confirmation message needs to show when page is validated-->
+		<div class="alert-warning form-control text-center" id="alertAddVenue" style="display:none">Venue added successfully</div>
+	  </div>
+	</div>	
+</main>
+<script>
+$(document).ready(function(){
+	$("form").submit(function(){
+	  $("#alertAddVenue").css("display", "block");
+	});
+});
+</script>
+{% endblock %}

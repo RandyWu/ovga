@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Begin page content -->
+<main role="main" class="container">
+	<div class="contain">
+	  <div class="right-half round">
+		<form id="venues_landing" method="POST">
+			<h4>Add, Update or Delete Venues</h4><br/>
+			<div style="width:50%; margin-left:25%">
+				<button type="button" class="btn btn-success form-control" onclick="window.location='{{ url_for('addvenue') }}'">Add Venue</button><br/><br/>
+				<button type="button" class="btn btn-primary form-control" onclick="window.location='{{ url_for('upddelvenue') }}'">Update/Delete Venue</button><br/><br/>
+				<button type="button" class="btn btn-info form-control" onclick="window.location='{{ url_for('admin') }}'"><i class="fas fa-backward"></i> Back to Admin</button><br/><br/>
+			</div>
+		</form>
+	  </div>
+	</div>	
+</main>
+{% endblock %}
