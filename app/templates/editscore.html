@@ -2,7 +2,7 @@
 {% block content %}
 <!-- Begin page content -->
 <main role="main" class="container">
-	<div class="contain">
+	<div class="contain" style="width:75%;margin-left:15%;">
 	  <div class="right-half round">
 	    <!-- href as scores/<event_id> -->
 		<h4>Event : <a href="#">{{event_name}} - {{event_venue}} @ {{event_address}}</a></h4><br/>
@@ -32,7 +32,7 @@
 
 			<div id="editScores" method="POST">
 			</div>
-			<div style="width:50%">
+			<div style="width:50%; margin-left: 25%;">
 				<!-- Submit changed scores to database onclick "Submit Score" Disable if not admin-->
 				<p><button type="submit" class="btn btn-primary form-control" name="submit" value="submit">Submit</button></p>
 				<!-- Destroy Event ID in Session on click "Change Event" & goto eventcal.html for admin & events.html for players -->
@@ -49,6 +49,7 @@
 				</center>
 			</div>
 			</form>
+			</div>
 		</div>
 	  </div>
 	</div>	
