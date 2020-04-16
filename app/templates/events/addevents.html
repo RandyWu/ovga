@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Begin page content -->
+<main role="main" class="container">
+	<div class="contain">
+	  <div class="left-half round">
+		<h4>Add Event</h4><br/>
+		<div id="datepicker"></div><br/>
+		<span id="date_disp"></span>
+		<ul id="events">
+		</ul>
+	  </div><br/>
+	  <div class="right-half round">
+		<h4>Add event by selecting date on the calendar:</h4><br/>
+		<form id="add_event" method="POST">
+			<p>Event Name: <input type="text" id="eventName" class="form-control" name="event_name" maxlength="256" pattern="\S+.*" 
+			                      title="Event Name shouldn't be empty or start with a whitespace" required /></p>
+			<p>Date: <input type="text" id="dateInput" class="form-control" name="selected_date" onkeypress="return false;" onkeydown="return false;"
+                    	    pattern="\d{4}-\d{2}-\d{2}" title="Select a date from the calendar on the left. (Date format: YYYY-MM-DD)" required /></p>
+			<label for="venueList">Venue:</label>
+			<select id="venueList" name="venue_list" class="form-control" required>
+				<option value="" disabled selected>Select a Venue...</option>
+				<!-- Foreach Venue -->
+				{% for venue in venue_list%}
+			    	<option value={{venue.VenueId}}>{{venue.Name}} - {{venue.Address}}</option>
+				{% endfor %}
+			</select>
+			<label for="courseList">Course:</label>
+			<select id="courseList" name="course_list" class="form-control" required>
+				<option value="">Select a Course...</option>
+				<!-- Course List -->
+			    <option value="" disabled selected>Please Choose a Venue First...</option>
+			</select>
+			<center><br/>
+				<button type="submit" class="btn btn-primary" id="addevent" name="submit" value="submit">Add</button>
+				<button type="button" class="btn btn-info" id="addevent" onclick="window.location='{{ url_for('events_landing') }}'"><i class="fas fa-backward"></i> Back </button>
+			</center>
+		</form><br/>
+		<!--Confirmation message needs to show when page is validated-->
+		<div class="form-control alert-warning text-center" id="alert_addgroup" style="display:none">Event added successfully</div>
+	  </div>
+	</div>	
+</main>
+<!-- Inbuilt Custom Script for Calendar -->
+<script src="../static/js/jquery-3.3.1.min.js"></script>
+<script src="../static/js/bootstrap-datepicker.min.js"></script>
+<script>
+	$(document).ready(function(){
+	
+	    $("#add_event").submit(function(){
+		  $("#alert_addgroup").css("display", "block");
+		});
+
+
+		$('#datepicker').datepicker({format: 'yyyy/mm/dd', todayHighlight: 'True'});
+
+		$('#datepicker').on('changeDate', function() {
+			$('#date_disp').html( $('#datepicker').datepicker('getFormattedDate') );
+			$('#dateInput').val( $('#datepicker').datepicker('getFormattedDate') );
+
+			var fetch = $('#dateInput').val();
+			$.ajax({
+				type: "POST",
+				url: "addevents/get_event",
+				data: { "date":fetch },
+				success: function (data) {
+					$(events).html(data)
+				},
+				error: function (event, request, settings) {
+					console.log('AjaxError' + ' : ' + settings);
+				},
+				timeout: 20000
+			});
+		});
+
+		//Populate Course List on Venue Dropdown change
+		$('#venueList').change(function () {
+			var fetch = $(this).val();
+			$.ajax({
+				type: "POST",
+				url: "addevents/get_course",
+				data: { "venue":fetch },
+				success: function (response) {
+					$(courseList).html(response)
+				},
+				error: function (event, request, settings) {
+					console.log('AjaxError' + ' : ' + settings);
+				},
+				timeout: 20000
+			});
+		});
+	});
+</script>
+{% endblock %}

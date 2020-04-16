@@ -14,7 +14,7 @@ def login():
     if form.validate_on_submit():
         user = User.query\
             .join(Player, Player.PlayerId==User.UserId)\
-            .filter_by(Email=form.email.data).first()
+            .filter_by(Email=form.email.data, Password=form.password.data).first()
         if (user):
             #Login admin or player
             flash('Successful Login')
