@@ -2,7 +2,7 @@
 
 {% if success == 'TRUE' %}
     {% for event in events%}
-        <li value={{event.EventId}}>{{event.Name}}</li>
+        <li value={{event.EventId}}><li>{{event.Date}} : <a href={{url_for('scores',event_id=event.EventId)}}>{{event.Name}}</a></li>
     {% endfor %}
 {% else %}
     <li><b>No events this day</b></li>
