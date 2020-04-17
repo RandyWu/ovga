@@ -1,7 +1,5 @@
-from app import app
+from app import app, login
 from flask import Flask, render_template, redirect, flash, request, url_for
-from flask_login import current_user
-from app import login
 from flask_login import current_user, login_user
 from app.model.model import Admin, Player, User
 
