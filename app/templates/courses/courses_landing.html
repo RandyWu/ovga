@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Begin page content -->
+<main role="main" class="container">
+	<div style="width:50%; margin-left: 25%;">
+			  <div class="right-half round">
+		<form id="courses_landing" method="POST">
+		    <!-- href as scores/<event_id> -->
+			<h4>Add, Edit/Delete Courses</h4><br/>
+				<center>
+				<button type="button" class="btn btn-success form-control" onclick="window.location='{{ url_for('addcourse') }}'">Add Course</button><br/><br/>
+				<button type="button" class="btn btn-primary form-control" onclick="window.location='{{ url_for('editcourses') }}'">Update/Delete Course</button><br/><br/>
+				<button type="button" class="btn btn-info form-control" onclick="window.location='{{ url_for('admin') }}'"><i class="fas fa-backward"></i> Back to Admin</button><br/><br/>
+				</center>
+		</form>
+	  </div>
+	</div>	
+</main>
+{% endblock %}
