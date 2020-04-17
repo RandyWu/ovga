@@ -18,6 +18,9 @@
 			{% for event in upcoming_events %}
 			<li>{{event.Date}} : {{event.Name}}</li>
 			{% endfor %}
+			{% if upcoming_events|length <1 %}
+			<h3>{{ none }}</h3>
+			{% endif %}
 			</ul>
 			<br/>
 			<br><br>
@@ -41,7 +44,7 @@
 			var fetch = $('#datepicker').datepicker('getFormattedDate');
 			$.ajax({
 				type: "POST",
-				url: "addevents/get_event",
+				url: "/events/add/get_event",
 				data: { "date":fetch },
 				success: function (data) {
 					$(events).html(data)
