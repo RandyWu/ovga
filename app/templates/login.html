@@ -2,17 +2,15 @@
 {% block content %}
 <main role="main" class="container">
 	<div class="contain">
-	  <div class="">
-		<div>
 			<div style="text-align: center;">
 				<!-- Error messages and flash feedback -->
 				{% for error in form.email.errors %}
 				<span style="color: red;">{{ error }}</span>
+				{% endfor %}				
+				{% for error in form.password.errors %}
+				<span style="color: red;">{{ error }}</span>
 				{% endfor %}
-				{% if form.errors %}
-				{{ form.errors }}
-				{% endif %}
-
+				<br>
 				<h1 style="margin-left: -3%;">Login</h1><br/>
 
 				<div style="margin-left: 35%;">
@@ -43,8 +41,6 @@
 			</form>
 			</div>
 			</div>
-		</div>
-	  </div>
 	</div>
 </main>
 {% endblock %}
