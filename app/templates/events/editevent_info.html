@@ -71,7 +71,7 @@
 			var fetch = $(this).val();
 			$.ajax({
 				type: "POST",
-				url: "addevents/get_course",
+				url: "/events/add/get_course",
 				data: { "venue":fetch },
 				success: function (response) {
 					$(courseList).html(response)

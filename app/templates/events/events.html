@@ -18,6 +18,9 @@
 			{% for event in upcoming_events %}
 				<li>{{event.Date}} : <a href={{url_for('scores',event_id=event.EventId)}}>{{event.Name}}</a></li>
 			{% endfor %}
+			{% if upcoming_events|length <1 %}
+			<h3>{{ none }}</h3>
+			{% endif %}
 			</ul>
 			<br/>
 			<br><br>

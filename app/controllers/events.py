@@ -1,12 +1,15 @@
 from app import app, login
+from datetime import date
 from flask_login import current_user, login_user
 from flask import Flask, session, render_template, jsonify, request, redirect, flash, url_for
 from app.model.model import Admin, Player, User, Event, Score, PlayerDivision, Venue, db, Course
 
 @app.route('/events')
 def events():
-    upcoming_events = Event.query.order_by(Event.Date.desc()).limit(10).all()
-    return render_template("/events/events.html", upcoming_events = upcoming_events)
+    today = date.today()
+    upcoming_events = (Event.query.filter(Event.Date > today)).order_by(Event.Date.desc()).limit(10).all()
+    none = "There are no upcoming events"
+    return render_template("/events/events.html", upcoming_events = upcoming_events, none=none)
 
 @app.route('/events/home')
 def events_landing():
@@ -69,7 +72,7 @@ def get_course():
     else:
         success = 'FALSE'
         
-    return render_template("get_courses.html", course_list=course_list, success=success)
+    return render_template("/events/get_courses.html", course_list=course_list, success=success)
 
 @app.route('/events/add', methods=['POST', 'GET'])
 def addevents():

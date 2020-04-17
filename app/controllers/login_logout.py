@@ -28,7 +28,7 @@ def login():
                 flash('Incorrect password')
                 return redirect(url_for('login'))    
         else:
-            flash('Invalid email')
+            flash('Invalid')
             return redirect(url_for('login'))
     return render_template('login.html', title='Sign In', form=form)
 from flask_login import logout_user, current_user

@@ -1,9 +1,13 @@
-from app import app
+from app import app,login
+from flask_login import current_user
 from flask import Flask, session, render_template, request, redirect, url_for
 from app.model.model import db, Admin, User
 
 @app.route('/editpersonal', methods=['POST', 'GET'])
 def editpersonal():
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
+
     session['admin_id'] = 1
     alert = "none"
     

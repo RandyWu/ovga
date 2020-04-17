@@ -61,7 +61,7 @@
 			var fetch = $('#dateInput').val();
 			$.ajax({
 				type: "POST",
-				url: "addevents/get_event",
+				url: "/events/add/get_event",
 				data: { "date":fetch },
 				success: function (data) {
 					$(events).html(data)
@@ -78,7 +78,7 @@
 			var fetch = $(this).val();
 			$.ajax({
 				type: "POST",
-				url: "addevents/get_course",
+				url: "/events/add/get_course",
 				data: { "venue":fetch },
 				success: function (response) {
 					$(courseList).html(response)
