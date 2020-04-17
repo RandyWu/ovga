@@ -6,7 +6,7 @@
 		<div class="contain">
 		  <div class="right-half round">
 		    <!-- href as scores/<event_id> -->
-		    <h4>Event : <a href="#">{Event_ID} / {Venue_ID} - {Venue Name} @ {Venue Address}</a></h4><br/>
+		    <h4>{{event_name}} - {{venue_name}} @ {{event_address}}</h4><br/>
 			<div id="table-scroll" class="table-scroll">
 			  <div class="table-wrap">
 				<table class="main-table">
@@ -32,9 +32,9 @@
 					<!-- Foreach player -->
 					{%for player in page_info[division]%}
 					<tr>
-						<td class="fixed-side">{Player Name}</td>
+						<td class="fixed-side">{{page_info[division][player]["Name"]}}</td>
 						{%for hole_num in range(1,num_of_holes+1) %}
-						<td value={{hole_num}}>{{page_info[division][player][hole_num]}}</td>
+							<td value={{hole_num}}>{{page_info[division][player]["Scores"][hole_num]}}</td>
 						{% endfor %}
 						<td><b>{{score_totals[player]}}</b></td>
 						<td>{Result}</td>

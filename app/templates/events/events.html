@@ -16,7 +16,7 @@
 			<ul id="upcomingEvents">
 			<!-- Foreach event start -->
 			{% for event in upcoming_events %}
-			<li>{{event.Date}} : {{event.Name}}</li>
+				<li>{{event.Date}} : <a href={{url_for('scores',event_id=event.EventId)}}>{{event.Name}}</a></li>
 			{% endfor %}
 			</ul>
 			<br/>
@@ -41,7 +41,7 @@
 			var fetch = $('#datepicker').datepicker('getFormattedDate');
 			$.ajax({
 				type: "POST",
-				url: "addevents/get_event",
+				url: "/events/add/get_event",
 				data: { "date":fetch },
 				success: function (data) {
 					$(events).html(data)
