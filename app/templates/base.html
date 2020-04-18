@@ -36,6 +36,14 @@
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('index') }}" onMouseOver="this.style.color='#007bff'" onMouseOut="this.style.color='white'"><i class="fas fa-home"></i><span class="sr-only">(current)</span></a>
             </li>
+            {% if current_user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('admin') }}" onMouseOver="this.style.color='#007bff'" onMouseOut="this.style.color='white'">Admin</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('players') }}" onMouseOver="this.style.color='#007bff'" onMouseOut="this.style.color='white'">Players</a>
+            </li>
+            {%endif%}
             <li class="nav-item">
               <a class="nav-link" href="{{ url_for('events') }}" onMouseOver="this.style.color='#007bff'" onMouseOut="this.style.color='white'">Events <i class="far fa-calendar-alt"></i></a>
             </li>
