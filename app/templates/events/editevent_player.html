@@ -49,8 +49,9 @@
 			</center>
 		</form><br/>
 		<!--Confirmation message needs to show when page is validated-->
-		<div class="alert alert-info alert-dismissible text-center" id="alert_addgroup" role="alert">{Player added/removed successfully}</div>
-	  </div>
+		<div class="alert alert-info alert-dismissible text-center" id="alert_addgroup" role="alert" style="display:{{alert}}">
+		Successful Update
+	 </div>
 	</div>
 
 	<script>
@@ -58,13 +59,19 @@
 			$('#playerSelect').hide();
 			$('#groupSelect').hide();
 
+			if ($('#alert_addgroup').css('display') == 'block') {
+			$("#alert_addgroup").fadeTo(800, 300).slideUp(300, function(){
+			$("#alert_addgroup").slideUp(300);
+			});
+			}
+
 			$('#action_select').change(function () {
 				$('#playerSelect').show();
 
 				var fetch = $(this).val();
 				$.ajax({
 					type: "POST",
-					url: "editevent_player/registered_users",
+					url: "/events/edit_player/registered_users",
 					data: { "action":fetch },
 					success: function (response) {
 						$(player_select).html(response)
@@ -82,7 +89,7 @@
 				var fetch = $(this).val();
 				$.ajax({
 					type: "POST",
-					url: "editevent_player/registered_users",
+					url: "/events/edit_player/registered_users",
 					data: { "action":fetch },
 					success: function (response) {
 						$(player_select).html(response)

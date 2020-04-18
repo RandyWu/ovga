@@ -185,10 +185,11 @@ def editevent_player():
         flash("Opps you don't have access to this page")
         return render_template("index.html")
 
+
     if session['selected_event']:
         selected_event = int(session['selected_event'])
         event = Event.query.filter_by(EventId=selected_event).first()
-
+        alert = "none"
         registered_players = Player.query\
             .join(PlayerDivision, Player.PlayerId==PlayerDivision.Player_Id)\
             .filter_by(Event_Id=selected_event).all()
@@ -200,26 +201,28 @@ def editevent_player():
             if action == "add":
                 new_player = PlayerDivision(Player_Id=player_id,Division_Id=1,Event_Id=selected_event)
                 db.session.add(new_player)
+                alert = "block"
                 db.session.commit()
 
                 registered_players = Player.query\
                     .join(PlayerDivision, Player.PlayerId==PlayerDivision.Player_Id)\
                     .filter_by(Event_Id=selected_event).all()
                 
-                return render_template("/events/editevent_player.html", registered_players=registered_players)
+                return render_template("/events/editevent_player.html", registered_players=registered_players, event=event, alert=alert)
 
             elif action == "remove":
                 removed_player = PlayerDivision.query.filter_by(Player_Id=player_id,Event_Id=selected_event).first()
                 db.session.delete(removed_player)
+                alert = "block"
                 db.session.commit()
 
                 registered_players = Player.query\
                     .join(PlayerDivision, Player.PlayerId==PlayerDivision.Player_Id)\
                     .filter_by(Event_Id=selected_event).all()
 
-                return render_template("/events/editevent_player.html", registered_players=registered_players)
+                return render_template("/events/editevent_player.html", registered_players=registered_players, event=event, alert=alert)
 
-    return render_template("/events/editevent_player.html", registered_players=registered_players, event=event)
+    return render_template("/events/editevent_player.html", registered_players=registered_players, event=event, alert=alert)
 
 @app.route('/events/edit_player/registered_users', methods=['POST', 'GET'])
 def get_registered():
@@ -254,7 +257,7 @@ def get_registered():
     else:
         success = 'FALSE'
 
-    return render_template("get_players.html", player_list=player_list, success=success)
+    return render_template("/events/get_players.html", player_list=player_list, success=success)
 
 # TODO: Figure out a way to add groups to events
 # @app.route('/editevent_player/get_groups', methods=['POST', 'GET'])
