@@ -16,7 +16,7 @@ def editpersonal():
         admin_info.Email = request.form['my_email']
         admin_info.Password = request.form['my_passwd']
         db.session.commit()
-        alert = "block";
+        alert = "block"
         
     admin_info = Admin.query.filter_by(Admin_Id=session['admin_id']).first()
     my_id = admin_info.Admin_Id

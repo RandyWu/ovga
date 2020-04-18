@@ -5,8 +5,6 @@ from app.model.model import *
 
 @app.route('/scores/<event_id>')
 def scores(event_id):
-    if not current_user.is_authenticated:
-        return redirect(url_for('login'))
     event = Event.query.filter_by(EventId=event_id).first()
     course_id = event.CourseID
     event_name = event.Name

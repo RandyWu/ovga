@@ -1,6 +1,6 @@
 from app import app
 from flask_login import current_user, login_user
-from flask import Flask, session, render_template, request, redirect, url_for, jsonify
+from flask import Flask, flash, session, render_template, request, redirect, url_for, jsonify
 from app.model.model import Admin, Player, User, Event, Score, PlayerDivision, Venue, db, Course, Hole
 
 @app.route('/players/home')
