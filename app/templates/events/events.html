@@ -5,7 +5,7 @@
     <main role="main" class="container">
 		<div class="contain">
 		  <div class="left-half round">
-		    <h2>Choose a date to display events:</h2><br/>
+		    <h2>Select a date:</h2><br/>
             <div id="datepicker"></div><br/><br/>
             <span id="date_disp"></span>
 			<ul id="events">
@@ -24,9 +24,6 @@
 			</ul>
 			<br/>
 			<br><br>
-			<!-- Foreach event end --> 
-			<!-- ID: 1. If logged in show, else hide URL: 2. If admin goto admin, else goto editscore -->
-			<p><button type="button" class="btn btn-light form-control" id="dashboard" onclick="window.location='{{ url_for('editscore') }}'">Go to Dashboard</button></p>
 		  </div>
 		</div>	
 	</main>

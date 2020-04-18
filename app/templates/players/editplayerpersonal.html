@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Begin page content -->
+<main role="main" class="container">
+	<div class="contain">
+	  <div class="round" style="width:75%; margin-left:15%;">
+		<h4>Edit Player Personal Information:</h4><br/>
+		<form id="editplayerpersonal" method="POST">
+			<div id="myInfo">
+			    <!-- Display details based on UserID login -->
+				<p>Name: <input id="playerName" name="player_name" class="form-control" value="{{player.Name}}" maxlength="256" pattern="\S+.*" 
+			                       title="Player Name shouldn't be empty or start with a whitespace" required /></p>
+				<p>Email: <input type="email" id="playerEmail" name="player_email" class="form-control" value="{{player.Email}}" maxlength="128" required /></p>
+				<p>Password (Must contain a uppercase, a lowercase, <a href=""></a> number, and must be at least 6 characters long): <input type="password" id="playerPasswd" name="player_passwd" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
+						    title="Must contain at least one number and one uppercase and lowercase letter, and at least 6 or more characters"
+						    maxlength="256" class="form-control" value="{{player.Password}}" required /></p>
+			</div>
+			<center><br/>
+				<button type="submit" class="btn btn-success" id="btnSave" name="submit" value="submit">Save</button>
+				<button type="button" class="btn btn-info" onclick="window.location='{{ url_for('players') }}'"><i class="fas fa-backward"></i> Back </button>
+			</center>
+		</form><br/>
+		<!--Confirmation message needs to show when data is changed-->
+		<div class="alert alert-info text-center alert-dismissible" role="alert" id="alertPlayerInfo" style="display:{{alert}}">
+		  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		  Personal Information Changed Successfully
+		</div>
+	</div>	
+</main>
+<script>
+	$(document).ready(function(){
+		
+		if ($('#alertPlayerInfo').css('display') == 'block') {
+			$("#alertPlayerInfo").fadeTo(800, 300).slideUp(300, function(){
+				$("#alertPlayerInfo").slideUp(300);
+			});
+		}
+	});
+	</script>
+{% endblock %}

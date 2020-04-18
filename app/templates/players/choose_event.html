@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Begin page content -->
+<main role="main" class="container">
+	<div class="contain">
+	  <div class="round" style="width:50%; margin-left:25%">
+		<form id="choose_event" method="POST">
+		    <!-- href as scores/<event_id> -->
+			<h4>Choose Event</h4><br/>
+			<div style="width:75%; margin-left:15%;">
+			<!-- From Populated EventID & VenueID in Session -->
+			<p>Select: 
+			  <select id="eventSelect" name="event_select" class="form-control">
+			    <!-- Foreach Event -->
+				{% if events is defined%}
+					{% for key,value in events%}
+						<option value="{{key}}">{{value}}</option>
+					{% endfor %}
+				{% else %}
+					<option value="" selected disabled>No Registered Events</option>
+				{% endif %}
+			  </select>
+			</p><br/>
+				<!-- Submit changed scores to database onclick "Update/Delete Event" -->
+				<center>
+				<!-- If an event is selected then show Change Event Info & Add/Remove Player, else hide it -->
+				<button type="submit" class="btn btn-primary form-control" id="viewScores" name="submit" value="submit">View</button><br/><br/>
+				<button type="button" class="btn btn-info form-control" onclick="window.location='{{ url_for('players') }}'"><i class="fas fa-backward"></i> Back </button><br/><br/>
+				</center>
+			</div>
+		</form>
+	  </div>
+	</div>	
+</main>
+{% endblock %}

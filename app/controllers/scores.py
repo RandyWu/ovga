@@ -1,10 +1,12 @@
 from app import app
 from flask_login import current_user, login_user
-from flask import Flask,session,render_template,request,redirect,url_for
+from flask import Flask, flash, session,render_template,request,redirect,url_for
 from app.model.model import *
 
 @app.route('/scores/<event_id>')
 def scores(event_id):
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
     event = Event.query.filter_by(EventId=event_id).first()
     course_id = event.CourseID
     event_name = event.Name
@@ -52,7 +54,7 @@ def scores(event_id):
     # player_total_score = sum(score_list)
 
     return render_template(
-        "scores.html", 
+        "/scores/scores.html", 
         event_name = event_name,
         event_address = event_address,
         venue_name = venue_name,
