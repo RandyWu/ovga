@@ -4,7 +4,7 @@
     <!-- Begin page content -->
     <main role="main" class="container">
 		<div class="contain">
-		  <div class="right-half round">
+		  <div class="round">
 		    <!-- href as scores/<event_id> -->
 		    <h4>{{event_name}} - {{venue_name}} @ {{event_address}}</h4><br/>
 			<div id="table-scroll" class="table-scroll">
@@ -12,7 +12,8 @@
 				<table class="main-table">
 					<!-- Foreach Group start -->
 					{%for division in page_info %}
-					<tr><td colspan="21" class="fixed-side">Division {{division}}</td></tr>
+					{% set outer_loop = loop %}
+					<tr><td colspan="21" class="fixed-side" style="background-color: #ffa500;">Division {{division}}</td></tr>
 					<tr>
 						<td class="fixed-side"><b>Hole</b></td>
 						{%for hole_num in range(1,num_of_holes+1) %}
@@ -21,12 +22,12 @@
 						<td></td>
 						<td></td>
 					</tr>
-					<tr class="fixed-column">
-						<td class="fixed-side"><b>Par</b></td>
+					<tr class="fixed-column" style="font-weight: bold;">
+						<td class="fixed-side">Par</td>
 						{%for par in par_list %}
-						<td><b>{{par}}</b></td>
+						<td id="num{{outer_loop.index}}par{{loop.index}}">{{par}}</td>
 						{% endfor %}
-						<td><b>{{par_total}}</b></td>
+						<td>{{par_total}}</td>
 						<td></td>
 					</tr>
 					<!-- Foreach player -->
@@ -34,7 +35,7 @@
 					<tr>
 						<td class="fixed-side">{{page_info[division][player]["Name"]}}</td>
 						{%for hole_num in range(1,num_of_holes+1) %}
-							<td value={{hole_num}}>{{page_info[division][player]["Scores"][hole_num]}}</td>
+							<td value={{hole_num}} id="num{{outer_loop.index}}hole{{loop.index}}">{{page_info[division][player]["Scores"][hole_num]}}</td>
 						{% endfor %}
 						<td><b>{{score_totals[player]}}</b></td>
 						<td>{Result}</td>
@@ -55,5 +56,94 @@
 		<br>
 		<br>
     </main>
+<script>
 
+var num,hole,par;
+for(j = 1; j <= 100; j++) {
+	num = "num"+j;
+	for(var i = 1; hole = document.getElementById(num+"hole"+i); i++) {
+
+		par = document.getElementById("num"+j+"par"+i);
+		
+		// 5 under par - Ostrich
+		if(parseInt(hole.innerText) == parseInt(par.innerText)-5) {
+			hole.style.backgroundColor = '#C3C9FF';
+			hole.classList.add("ostrich");
+		}
+
+		// 4 under par - Triple Eagle/Condor
+		else if(parseInt(hole.innerText) == parseInt(par.innerText)-4) {
+			hole.style.backgroundColor = '#C3C9FF';
+			hole.classList.add("triple_eagle_condor");
+		}
+
+        // 3 under par - Double Eagle/Albatross
+		else if(parseInt(hole.innerText) == parseInt(par.innerText)-3) {
+			hole.style.backgroundColor = '#C3C9FF';
+			hole.classList.add("double_eagle_albatross");
+		}
+
+		// 2 under par - Eagle
+		else if(parseInt(hole.innerText) == parseInt(par.innerText)-2) {
+			hole.style.backgroundColor = '#C3C9FF';
+			hole.classList.add("eagle");
+		}
+
+        // 1 under par - Birdie
+		else if(parseInt(hole.innerText) == parseInt(par.innerText)-1) {
+			hole.style.backgroundColor = '#A3EBFC';
+			hole.classList.add("birdie");
+		}
+
+		// equal to par - Par
+		else if(hole.innerHTML === par.innerHTML) {
+			hole.classList.add("par");
+		}
+		
+		// 1 over par - Bogey
+		else if(parseInt(hole.innerText) == parseInt(par.innerText)+1) {
+			hole.style.backgroundColor = '#F0FFA2';
+			hole.classList.add("bogey");
+		}
+
+		// 2 over par - Double bogey
+		else if(parseInt(hole.innerText) == parseInt(par.innerText)+2) {
+			hole.style.backgroundColor = '#FC7A92';
+			hole.classList.add("double_bogey");
+		}
+
+		// 3 over par - Triple bogey
+		else if(parseInt(hole.innerText) == parseInt(par.innerText)+3) {
+			hole.style.backgroundColor = '#867F81';
+			hole.classList.add("triple_bogey");
+		}
+
+		// 4 over par - Quadruple bogey
+		else if(parseInt(hole.innerText) == parseInt(par.innerText)+4) {
+			hole.style.backgroundColor = '#867F81';
+			hole.classList.add("quadruple_bogey");
+		}
+
+		// 5 over par - Bogey 5
+		else if(parseInt(hole.innerText) == parseInt(par.innerText)+5) {
+			hole.style.backgroundColor = '#867F81';
+			hole.classList.add("bogey_5");
+		}
+
+		// Stroke less than 5
+		else if(parseInt(hole.innerText) < parseInt(par.innerText)+2) {
+			hole.style.backgroundColor = '#A3EBFC';
+			hole.classList.add("ostrich_5-");
+		}
+
+		// Stroke greater than 5
+		else if(parseInt(hole.innerText) == parseInt(par.innerText)+2) {
+			hole.style.backgroundColor = '#867F81';
+			hole.classList.add("bogey_5+");
+		}
+
+	}
+}
+
+</script>
 {% endblock %}
