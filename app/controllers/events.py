@@ -229,17 +229,12 @@ def get_registered():
     action = request.form.get("action")
     selected_event = int(session['selected_event'])
     if action == "add":
-        # Failed subquery attempts
-        # player_list = Player.query\
-        #     .join(PlayerDivision, Player.PlayerId==PlayerDivision.Player_Id)\
-        #     .filter((PlayerDivision.Event_Id != selected_event) | (PlayerDivision.Event_Id == None)).all()
-        # subquery = PlayerDivision.query.filter(PlayerDivision.Player_Id)
-        # player_list = Player.query.filter(Player.PlayerId.notin_(subquery)).all()
+        # player_list = Player.query.filter(
+        #     ~PlayerDivision.query.filter(Player.PlayerId == PlayerDivision.Player_Id)
+        #     .exists()
+        # ).all()
 
-        player_list = Player.query.filter(
-            ~PlayerDivision.query.filter(Player.PlayerId == PlayerDivision.Player_Id)
-            .exists()
-        ).all()
+        player_list = Player.query.outerjoin(PlayerDivision).filter(PlayerDivision.Event_Id!=selected_event).all()
         
         if player_list:
             success = 'TRUE'
@@ -260,13 +255,3 @@ def get_registered():
     return render_template("/events/get_players.html", player_list=player_list, success=success)
 
 # TODO: Figure out a way to add groups to events
-# @app.route('/editevent_player/get_groups', methods=['POST', 'GET'])
-# def get_groups():
-#     action = request.form.get("action")
-#     selected_event = int(session['selected_event'])
-
-#     if action == "add":
-#         groups = PlayerDivision.query.filter_by()
-#     elif action == "remove":
-#     else:
-#         return None
