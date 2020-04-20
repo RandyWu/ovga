@@ -12,4 +12,4 @@ def admin():
         flash("Opps you don't have access to this page")
         return render_template("index.html")
     person = Player.query.filter_by(PlayerId=current_user.UserId).first()
-    return render_template("admin.html", person=person)
+    return render_template("/admin/admin.html", person=person)
