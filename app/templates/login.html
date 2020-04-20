@@ -2,44 +2,43 @@
 {% block content %}
 <main role="main" class="container">
 	<div class="contain">
-			<div style="text-align: center;">
-				<!-- Error messages and flash feedback -->
-				{% for error in form.email.errors %}
-				<span style="color: red;">{{ error }}</span>
-				{% endfor %}				
-				{% for error in form.password.errors %}
-				<span style="color: red;">{{ error }}</span>
-				{% endfor %}
-				<br>
-				<h1 style="margin-left: -3%;">Login</h1><br/>
+			<div class="round">
+			
+				<h1>Login</h1><br/>
 
-				<div style="margin-left: 35%;">
 				<form action="" method="POST">
 					{{ form.csrf_token }}
 			    <table>
 				  <tr>
-					  <td>Email: </td>
+					  <td class="text-left">Email: &nbsp;&nbsp; </td>
 					  <td>{{form.email}}</td>
 				  </tr>
 				  <tr>
-					  <td>Password: </td>
+					  <td class="text-left">Password: &nbsp;&nbsp; </td>
 					  <td>{{form.password}}</td>
 				  </tr>
 				  <tr>
-					  <td colspan="2">&nbsp;</td>
+					  <td colspan="2">
+						<!-- Error messages and flash feedback -->
+						{% for error in form.email.errors %}
+						<span style="color: red; background-color: bisque;">{{ error }}</span>
+						{% endfor %}				
+						{% for erroring in form.password.errors %}
+						<span style="color: red; background-color: bisque;">{{ erroring }}</span>
+						{% endfor %}
+					  </td>
 				  </tr>
 				  <tr>
-					  <td colspan="2"><input type="submit" class="form-control btn btn-primary" value="Login"/></td>
+					<td colspan="2">&nbsp;</td>
 				  </tr>
 				  <tr>
-					  <td colspan="2">&nbsp;</td>
+					  <td colspan="2"><p><input type="submit" class="form-control btn btn-primary" value="Login"/></p></td>
 				  </tr>
 				  <tr>
 					  <td colspan="2"><a class="form-control btn btn-warning" href="{{ url_for('events') }}">General Public</a></td>
 				  </tr>
 				</table>
 			</form>
-			</div>
 			</div>
 	</div>
 </main>
