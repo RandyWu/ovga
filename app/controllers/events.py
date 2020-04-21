@@ -229,11 +229,6 @@ def get_registered():
     action = request.form.get("action")
     selected_event = int(session['selected_event'])
     if action == "add":
-        # player_list = Player.query.filter(
-        #     ~PlayerDivision.query.filter(Player.PlayerId == PlayerDivision.Player_Id)
-        #     .exists()
-        # ).all()
-
         player_list = Player.query.outerjoin(PlayerDivision).filter(PlayerDivision.Event_Id!=selected_event).all()
         
         if player_list:
