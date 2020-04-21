@@ -1,5 +1,6 @@
 from app import app
 from flask_login import current_user, login_user
+from werkzeug.security import generate_password_hash
 from flask import Flask, flash, session, render_template, request, redirect, url_for, jsonify
 from app.model.model import Admin, Player, User, Event, Score, PlayerDivision, Venue, db, Course, Hole
 
@@ -111,8 +112,11 @@ def editplayerpersonal():
         player = Player.query.filter_by(PlayerId=player_id).first()
         player.Name = player_name
         player.Email = player_email
-        #TODO : encrypt with sha1
-        player.Password = player_passwd
+        try:
+            player.Password = generate_password_hash(player_passwd)
+        except:
+            return jsonify({'error': 'An error occurred saving the user to the database'}), 500
+        
         alert = "block"
         db.session.commit()
 
