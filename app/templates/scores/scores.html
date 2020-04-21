@@ -32,10 +32,11 @@
 					</tr>
 					<!-- Foreach player -->
 					{%for player in page_info[division]%}
+					{% set second_loop = loop %}
 					<tr>
 						<td class="fixed-side">{{page_info[division][player]["Name"]}}</td>
 						{%for hole_num in range(1,num_of_holes+1) %}
-							<td value={{hole_num}} id="num{{outer_loop.index}}hole{{loop.index}}">{{page_info[division][player]["Scores"][hole_num]}}</td>
+							<td value={{hole_num}} id="num{{outer_loop.index}}player{{second_loop.index}}hole{{loop.index}}">{{page_info[division][player]["Scores"][hole_num]}}</td>
 						{% endfor %}
 						<td><b>{{score_totals[player]}}</b></td>
 						<td>{Result}</td>
@@ -58,90 +59,90 @@
     </main>
 <script>
 
-var num,hole,par;
-for(j = 1; j <= 100; j++) {
-	num = "num"+j;
-	for(var i = 1; hole = document.getElementById(num+"hole"+i); i++) {
+var hole,par;
+for(var i=1; i<=50; i++){
+	for(var j=1; j<=50; j++){
+		for(var k=1; hole = document.getElementById("num"+i+"player"+j+"hole"+k); k++) {
 
-		par = document.getElementById("num"+j+"par"+i);
-		
-		// 5 under par - Ostrich
-		if(parseInt(hole.innerText) == parseInt(par.innerText)-5) {
-			hole.style.backgroundColor = '#C3C9FF';
-			hole.classList.add("ostrich");
-		}
+            par = document.getElementById("num"+j+"par"+k);
+			// 5 under par - Ostrich
+			if(parseInt(hole.innerText) == parseInt(par.innerText)-5) {
+				hole.style.backgroundColor = '#C3C9FF';
+				hole.classList.add("ostrich");
+			}
 
-		// 4 under par - Triple Eagle/Condor
-		else if(parseInt(hole.innerText) == parseInt(par.innerText)-4) {
-			hole.style.backgroundColor = '#C3C9FF';
-			hole.classList.add("triple_eagle_condor");
-		}
+			// 4 under par - Triple Eagle/Condor
+			else if(parseInt(hole.innerText) == parseInt(par.innerText)-4) {
+				hole.style.backgroundColor = '#C3C9FF';
+				hole.classList.add("triple_eagle_condor");
+			}
 
-        // 3 under par - Double Eagle/Albatross
-		else if(parseInt(hole.innerText) == parseInt(par.innerText)-3) {
-			hole.style.backgroundColor = '#C3C9FF';
-			hole.classList.add("double_eagle_albatross");
-		}
+			// 3 under par - Double Eagle/Albatross
+			else if(parseInt(hole.innerText) == parseInt(par.innerText)-3) {
+				hole.style.backgroundColor = '#C3C9FF';
+				hole.classList.add("double_eagle_albatross");
+			}
 
-		// 2 under par - Eagle
-		else if(parseInt(hole.innerText) == parseInt(par.innerText)-2) {
-			hole.style.backgroundColor = '#C3C9FF';
-			hole.classList.add("eagle");
-		}
+			// 2 under par - Eagle
+			else if(parseInt(hole.innerText) == parseInt(par.innerText)-2) {
+				hole.style.backgroundColor = '#C3C9FF';
+				hole.classList.add("eagle");
+			}
 
-        // 1 under par - Birdie
-		else if(parseInt(hole.innerText) == parseInt(par.innerText)-1) {
-			hole.style.backgroundColor = '#A3EBFC';
-			hole.classList.add("birdie");
-		}
+			// 1 under par - Birdie
+			else if(parseInt(hole.innerText) == parseInt(par.innerText)-1) {
+				hole.style.backgroundColor = '#A3EBFC';
+				hole.classList.add("birdie");
+			}
 
-		// equal to par - Par
-		else if(hole.innerHTML === par.innerHTML) {
-			hole.classList.add("par");
-		}
-		
-		// 1 over par - Bogey
-		else if(parseInt(hole.innerText) == parseInt(par.innerText)+1) {
-			hole.style.backgroundColor = '#F0FFA2';
-			hole.classList.add("bogey");
-		}
+			// equal to par - Par
+			else if(hole.innerHTML === par.innerHTML) {
+				hole.classList.add("par");
+			}
+			
+			// 1 over par - Bogey
+			else if(parseInt(hole.innerText) == parseInt(par.innerText)+1) {
+				hole.style.backgroundColor = '#F0FFA2';
+				hole.classList.add("bogey");
+			}
 
-		// 2 over par - Double bogey
-		else if(parseInt(hole.innerText) == parseInt(par.innerText)+2) {
-			hole.style.backgroundColor = '#FC7A92';
-			hole.classList.add("double_bogey");
-		}
+			// 2 over par - Double bogey
+			else if(parseInt(hole.innerText) == parseInt(par.innerText)+2) {
+				hole.style.backgroundColor = '#FC7A92';
+				hole.classList.add("double_bogey");
+			}
 
-		// 3 over par - Triple bogey
-		else if(parseInt(hole.innerText) == parseInt(par.innerText)+3) {
-			hole.style.backgroundColor = '#867F81';
-			hole.classList.add("triple_bogey");
-		}
+			// 3 over par - Triple bogey
+			else if(parseInt(hole.innerText) == parseInt(par.innerText)+3) {
+				hole.style.backgroundColor = '#867F81';
+				hole.classList.add("triple_bogey");
+			}
 
-		// 4 over par - Quadruple bogey
-		else if(parseInt(hole.innerText) == parseInt(par.innerText)+4) {
-			hole.style.backgroundColor = '#867F81';
-			hole.classList.add("quadruple_bogey");
-		}
+			// 4 over par - Quadruple bogey
+			else if(parseInt(hole.innerText) == parseInt(par.innerText)+4) {
+				hole.style.backgroundColor = '#867F81';
+				hole.classList.add("quadruple_bogey");
+			}
 
-		// 5 over par - Bogey 5
-		else if(parseInt(hole.innerText) == parseInt(par.innerText)+5) {
-			hole.style.backgroundColor = '#867F81';
-			hole.classList.add("bogey_5");
-		}
+			// 5 over par - Bogey 5
+			else if(parseInt(hole.innerText) == parseInt(par.innerText)+5) {
+				hole.style.backgroundColor = '#867F81';
+				hole.classList.add("bogey_5");
+			}
 
-		// Stroke less than 5
-		else if(parseInt(hole.innerText) < parseInt(par.innerText)+2) {
-			hole.style.backgroundColor = '#A3EBFC';
-			hole.classList.add("ostrich_5-");
-		}
+			// Stroke less than 5
+			else if(parseInt(hole.innerText) < parseInt(par.innerText)+2) {
+				hole.style.backgroundColor = '#A3EBFC';
+				hole.classList.add("ostrich_5-");
+			}
 
-		// Stroke greater than 5
-		else if(parseInt(hole.innerText) == parseInt(par.innerText)+2) {
-			hole.style.backgroundColor = '#867F81';
-			hole.classList.add("bogey_5+");
-		}
+			// Stroke greater than 5
+			else if(parseInt(hole.innerText) == parseInt(par.innerText)+2) {
+				hole.style.backgroundColor = '#867F81';
+				hole.classList.add("bogey_5+");
+			}
 
+		}
 	}
 }
 
