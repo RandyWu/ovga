@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
 <!-- Begin page content -->
-<main role="main" class="container">
-	  <div class="right-half round">
+<main role="main" class="container"style="margin-left: 10%;">
+	  <div class="right-half round" >
 		<h4>Add course to the selected venue:</h4><br/>
 		<form id="add_venue" method="POST">
 		    <p>Choose a Venue: 
@@ -18,8 +18,8 @@
 			    {% endif %}
 				</select>
 			</p>
-			<p>Course Name: <input type="text" id="courseName" class="form-control" name="course_name" maxlength="255" pattern="\S+.*" 
-			                       title="Course Name shouldn't be empty or start with a whitespace" required /></p>
+			<p>Course Name: <input type="text" id="courseName" class="form-control" name="course_name" maxlength="255" pattern="^[a-zA-Z0-9]+$" 
+			                       title="Can't be empty or have special characters" required /></p>
 			<p>Number of Holes: <input type="number" id="courseHole" class="form-control" name="hole_num" min="1" max="18" required /></p>
 			<center><br/>
 				<button type="submit" class="btn btn-primary" id="addVenue" name="submit" value="submit">Add Course</button>

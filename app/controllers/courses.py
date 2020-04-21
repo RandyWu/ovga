@@ -13,11 +13,6 @@ def courses_landing():
         return render_template("index.html")
     return render_template("/courses/courses_landing.html")
 
-#TODO: Confirmation message on successful submit
-#TODO: Form validation for course_name. No special characters
-#TODO: Form security
-#TODO: Form validation for hole_num. Numbers only, can't be 0
-
 @app.route('/courses/add', methods=['POST','GET'])
 def addcourse():
     if not current_user.is_authenticated:
