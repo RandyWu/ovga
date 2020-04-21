@@ -2,7 +2,7 @@ from app import app, login
 from datetime import date
 from flask_login import current_user, login_user
 from flask import Flask, session, render_template, jsonify, request, redirect, flash, url_for
-from app.model.model import Admin, Player, User, Event, Score, PlayerDivision, Venue, db, Course
+from app.model.model import *
 
 @app.route('/events')
 def events():
@@ -196,11 +196,24 @@ def editevent_player():
 
         if request.method == 'POST' and request.form["submit"]:
             player_id = request.form.get('player')
+            division_id = request.form.get('group')
             action = request.form.get('action')
 
+            # Getting the # of holes the course has
+            course_id = int(event.CourseID)
+            event_course = Course.query.filter_by(CourseID=course_id).first()
+            course_holes = Hole.query.filter_by(CourseID=course_id).all()
+
             if action == "add":
-                new_player = PlayerDivision(Player_Id=player_id,Division_Id=1,Event_Id=selected_event)
+                # Adding the player to the Event 
+                new_player = PlayerDivision(Player_Id=player_id,Division_Id=division_id,Event_Id=selected_event)
                 db.session.add(new_player)
+
+                # Adding blank scores for the newly added player
+                for hole in course_holes:
+                    new_score = Score(PlayerID=player_id,EventID=selected_event,CourseID=course_id,HoleID=hole.HoleID,MatchID=1,Strokes=0)
+                    db.session.add(new_score)
+
                 alert = "block"
                 db.session.commit()
 
@@ -228,9 +241,21 @@ def editevent_player():
 def get_registered():
     action = request.form.get("action")
     selected_event = int(session['selected_event'])
+    player_list=[]
     if action == "add":
-        player_list = Player.query.outerjoin(PlayerDivision).filter(PlayerDivision.Event_Id!=selected_event).all()
-        
+        # subquery finds all players registered in the event
+        # then a comparison to all players in the Player table is made
+        # and all players in the Player table and NOT IN the subquery
+        # is returned
+        subquery = Player.query.outerjoin(PlayerDivision).filter(PlayerDivision.Event_Id==selected_event)
+        # unsuded code that doesn't work
+        # player_list = Player.query.filter(Player.PlayerId.notin_(subquery.Player))
+        Players = Player.query.all()
+
+        for player in Players:
+            if player not in subquery:
+                player_list.append(player)
+
         if player_list:
             success = 'TRUE'
         else:
@@ -250,3 +275,14 @@ def get_registered():
     return render_template("/events/get_players.html", player_list=player_list, success=success)
 
 # TODO: Figure out a way to add groups to events
+@app.route('/events/edit_player/registered_groups', methods=['POST', 'GET'])
+def get_groups():
+    action = request.form.get("action")
+    selected_event = int(session['selected_event'])
+    division_list=Division.query.filter_by(EventID=selected_event).all()
+    if division_list:
+        success = 'TRUE'
+    else:
+        success = 'FALSE'
+    
+    return render_template("/events/get_division.html", division_list=division_list, success=success)

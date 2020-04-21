@@ -38,7 +38,7 @@
 			  </select>
 			</p>
 			<p id="groupSelect">Choose Group: 
-			  <select name="group_select" class="form-control">
+			  <select id="group_select" name="group" class="form-control">
 			    <!-- Foreach Group in Event -->
 			  </select>
 			</p>
@@ -60,32 +60,36 @@
 			$('#groupSelect').hide();
 
 			if ($('#alert_addgroup').css('display') == 'block') {
-			$("#alert_addgroup").fadeTo(800, 300).slideUp(300, function(){
-			$("#alert_addgroup").slideUp(300);
-			});
+				$("#alert_addgroup").fadeTo(800, 300).slideUp(300, function(){
+					$("#alert_addgroup").slideUp(300);
+				});
 			}
 
 			$('#action_select').change(function () {
 				$('#playerSelect').show();
 
-				var fetch = $(this).val();
-				$.ajax({
-					type: "POST",
-					url: "/events/edit_player/registered_users",
-					data: { "action":fetch },
-					success: function (response) {
-						$(player_select).html(response)
-					},
-					error: function (event, request, settings) {
-						console.log('AjaxError' + ' : ' + settings);
-					},
-					timeout: 20000
-				});
-			});
+				// Group display
+				var action = $('#action_select').val();
+				if (action == "add") {
+					$('#groupSelect').show();
 
-			$('#player_select').change(function () {
-				$('#groupSelect').show();
+					$.ajax({
+						type: "POST",
+						url: "/events/edit_player/registered_groups",
+						success: function (response) {
+							$('#group_select').html(response)
+						},
+						error: function (event, request, settings) {
+							console.log('AjaxError' + ' : ' + settings);
+						},
+						timeout: 20000
+					});
+				} 
+				else {
+					$('#groupSelect').hide();
+				}
 
+				// Player dropdown options
 				var fetch = $(this).val();
 				$.ajax({
 					type: "POST",

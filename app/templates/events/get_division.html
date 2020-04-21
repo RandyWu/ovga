@@ -1,0 +1,11 @@
+{% block content %}
+
+{% if success == 'TRUE' %}
+    {% for division in division_list%}
+        <option value={{division.DivisionID}}>{{division.Division}}</option>
+    {% endfor %}
+{% else %}
+    <option>No Groups for this event</option>
+{% endif %}
+
+{% endblock %}

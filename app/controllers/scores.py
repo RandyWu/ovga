@@ -46,10 +46,6 @@ def scores(event_id):
     par_total = sum(par_list)
 
     # TODO: Player Results
-    # score_list = []
-    # for hole in range(num_of_holes):
-    #     score_list.append(player_scores[hole].Strokes)
-    # player_total_score = sum(score_list)
 
     return render_template(
         "/scores/scores.html", 
@@ -129,7 +125,7 @@ def editscore():
         event_venue=event_venue,
         event_groups=distinct_groups,
         course_holes=course_holes,
-        event=selected_event
+        event=session_event
     )
 
 @app.route('/scores/edit/getscore', methods=['POST', 'GET'])
@@ -147,12 +143,16 @@ def getscore():
         name = name.Name
 
         score = Score.query.filter_by(EventID=session_event,HoleID=selected_hole,PlayerID=player.Player_Id).first()
-        score_id = score.ScoreId
-        score = score.Strokes
+        if score:
+            score_id = score.ScoreId
+            score = score.Strokes
 
-        player_names.append(name)
-        id_list.append(score_id)
-        score_list.append(score)
+            player_names.append(name)
+            id_list.append(score_id)
+            score_list.append(score)
+        
+        else:
+            rawr = 1
 
     hole_par = Hole.query.filter_by(HoleID=selected_hole).first()
     hole_par = hole_par.Par
