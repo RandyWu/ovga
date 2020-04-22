@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Begin page content -->
+<main role="main" class="container">
+	<div class="contain">
+	  <div class="left-half round">
+	  <form id="editplayerinfo" method="POST">
+		<h4>Select Event</h4><br/><br>
+		   <select id="eventSelect" name="event_select" class="form-control" required>
+		      <option value="-1" disabled selected>Select..</option>
+			  {% if success == 'TRUE' %}
+				  {% for event in event_list %}
+				  <option value="{{event.EventId}}">{{event.Name}} - {{event.Date}}</option>
+                  {% endfor %}
+                {% endif %}
+		   </select>
+		</p> 
+	  </div><br/>
+	  <div class="right-half round">
+		<h4>Division Information</h4><br/>
+		    <!-- On select Event show this, else hide -->
+			<div id="divisionInfo">
+				<p>Name: <input type="text" id="divisionName" name="division_name" class="form-control" maxlength="256" pattern="\S+.*" 
+			                           title="Division Name shouldn't be empty or start with a whitespace" required /></p>
+			    </p>
+			<center><br/>
+				<button type="submit" class="btn btn-success" id="btnSave" name="btn_save" value="{{alert}}">Save</button>
+				<button type="button" class="btn btn-info" onclick="window.location='{{ url_for('admin') }}'"><i class="fas fa-backward"></i> Back </button>
+			</center>
+			</div>
+			<!-- <div id="noPlayer"></div> -->
+		</form><br/>
+		<!--Confirmation message needs to show when data is changed-->
+		<div class="alert-warning form-control text-center" id="alertDivisionInfo" role="alert" style="display:{{alert}}">
+           Division Information Changed Successfully
+		</div>
+	  </div>
+	</div>	
+</main>
+<script>
+$(document).ready(function(){
+    
+	<!-- $("#divisionInfo").hide(); -->
+	<!-- $("#noPlayer").text("No Player is selected"); -->
+
+    $('#btnSave').click(function(){
+		$('#btnSave').val('block');
+	});
+
+	if ($('#alertDivisionInfo').css('display') == 'block') {
+		$("#alertDivisionInfo").fadeTo(800, 300).slideUp(300, function(){
+			$("#alertDivisionInfo").slideUp(300);
+		});
+	}
+	
+	
+});
+</script>
+{% endblock %}
