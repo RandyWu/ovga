@@ -35,6 +35,8 @@ def edit_divisions():
         flash("Opps you don't have access to this page")
         return render_template("index.html")
 
+    event_list = Event.query.all()
+
     if session['selected_event']:
         selected_event = int(session['selected_event'])
 
@@ -56,8 +58,9 @@ def edit_divisions():
             db.session.commit()
 
             return render_template(
-                "/divisions/edit_divisions.html",
+                "/divisions/divisions_home.html",
                 event_groups=event_groups,
+                event_list = event_list,
                 )
         
     return render_template(
@@ -65,10 +68,7 @@ def edit_divisions():
         event_groups=event_groups,
         event_name=event_name, 
         event_date=event_date,
-        event_venue=event_venue,
-        event_course=event_course,
-        venue_list=venue_list,
-        course_list=course_list)
+        )
 
 @app.route('/divisions/add', methods=['POST', 'GET'])
 def add_divisions():
