@@ -5,30 +5,47 @@
 	<div class="contain">
 	  <div class="left-half round">
 	  <form id="editplayerinfo" method="POST">
-		<h4>Select Event</h4><br/><br>
-		   <select id="eventSelect" name="event_select" class="form-control" required>
-		      <option value="-1" disabled selected>Select..</option>
-			  {% if success == 'TRUE' %}
-				  {% for event in event_list %}
-				  <option value="{{event.EventId}}">{{event.Name}} - {{event.Date}}</option>
-                  {% endfor %}
-                {% endif %}
-		   </select>
-		</p> 
+		<h4>Current Divisions:</h4>
+		<br>
+		<table class="table table-hover">
+		{% if current_divisions|length != 0%}
+			{% for division in current_divisions%}
+			<tr>
+				<td>{{division.Division}}</td>
+			</tr>
+			{% endfor %}
+		{% else %}
+			<tr>
+				<td>No Divisions Currently</td>
+			</tr>
+		{% endif %}
+        </table>	
 	  </div><br/>
 	  <div class="right-half round">
 		<h4>Division Information</h4><br/>
 		    <!-- On select Event show this, else hide -->
-			<div id="divisionInfo">
-				<p>Name: <input type="text" id="divisionName" name="division_name" class="form-control" maxlength="256" pattern="\S+.*" 
-			                           title="Division Name shouldn't be empty or start with a whitespace" required /></p>
-			    </p>
-			<center><br/>
-				<button type="submit" class="btn btn-success" id="btnSave" name="btn_save" value="{{alert}}">Save</button>
+			<p id="actionSelect">Action:
+			  <select id="action_select" name="action" class="form-control" required>
+			  	<option value="" disabled selected>Select a Action...</option>
+			    <option value="add">Add</option>
+				<option value="remove">Remove</option>
+			  </select>
+			</p>
+			<p id="divisionInfo">Division Name: 
+			  <input id="divisionName" name="name" class="form-control" required>
+			</p>
+			<p id="divisionSelect">Divisions: 
+			  <select id="division_select" name="division" class="form-control" required>
+			  	<option value="" disabled selected>Select a Division...</option>
+			    <!-- Foreach Group in Event -->
+				{% for division in current_divisions %}
+					<option value="{{division.DivisionID}}">{{division.Division}}</option>
+				{% endfor %}
+			  </select>
+			</p>
+				<button type="submit" class="btn btn-success" id="btnSave" name="submit" value="{{alert}}">Save</button>
 				<button type="button" class="btn btn-info" onclick="window.location='{{ url_for('admin') }}'"><i class="fas fa-backward"></i> Back </button>
 			</center>
-			</div>
-			<!-- <div id="noPlayer"></div> -->
 		</form><br/>
 		<!--Confirmation message needs to show when data is changed-->
 		<div class="alert-warning form-control text-center" id="alertDivisionInfo" role="alert" style="display:{{alert}}">
@@ -40,8 +57,8 @@
 <script>
 $(document).ready(function(){
     
-	<!-- $("#divisionInfo").hide(); -->
-	<!-- $("#noPlayer").text("No Player is selected"); -->
+	$("#divisionInfo").hide();
+	$('#divisionSelect').hide();
 
     $('#btnSave').click(function(){
 		$('#btnSave').val('block');
@@ -53,7 +70,21 @@ $(document).ready(function(){
 		});
 	}
 	
-	
+	$('#action_select').change(function () {
+		var action = $('#action_select').val();
+		if (action == "add") {
+			$("#divisionInfo").show();
+			$('#divisionSelect').hide();
+			$("#divisionName").attr("required",true);
+			$('#division_select').removeAttr("required");
+		} 
+		else {
+			$("#divisionInfo").hide();
+			$('#divisionSelect').show();
+			$("#divisionName").removeAttr("required");
+			$('#division_select').attr("required",true);
+		}
+	});
 });
 </script>
 {% endblock %}

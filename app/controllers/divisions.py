@@ -92,8 +92,46 @@ def add_divisions():
         flash("Opps you don't have access to this page")
         return render_template("index.html")
 
-    event_list = Event.query.all()
+    if session['selected_event']:
+        selected_event = int(session['selected_event'])
+        event = Event.query.filter_by(EventId=selected_event).first()
+        current_divisions = Division.query.filter_by(EventID=selected_event).distinct().all()
+        alert = "none"
+
+        if request.method == 'POST' and request.form["submit"]:
+            action = request.form.get('action')
+            rawr = request.form
+
+            if action == "add":
+                division_name = request.form.get('name')
+                new_division = Division(Division=division_name,EventID=selected_event)
+                db.session.add(new_division)
+                db.session.commit()
+
+                current_divisions = Division.query.filter_by(EventID=selected_event).distinct().all()
+                alert = "block"
+                return render_template("/divisions/add_divisions.html", current_divisions=current_divisions,alert=alert)
+
+            elif action == "remove":
+                division_id = request.form.get('division')
+
+                removed_division = Division.query.filter_by(DivisionID=division_id).all()
+                player_division = PlayerDivision.query.filter_by(Division_Id=division_id,Event_Id=selected_event).all()
+                if player_division:
+                    for pd in player_division:
+                        removed_score = Score.query.filter_by(PlayerID=pd.Player_Id,EventID=selected_event).all()
+                        db.session.delete(removed_score)
+                    db.session.delete(player_division)
+                
+                if removed_division:
+                    for division in removed_division:
+                        db.session.delete(division)
+                db.session.commit()
+                
+                current_divisions = Division.query.filter_by(EventID=selected_event).distinct().all()
+                alert = "block"
+                return render_template("/divisions/add_divisions.html", current_divisions=current_divisions,alert=alert)
         
-    return render_template("/divisions/add_divisions.html", event_list = event_list)
+    return render_template("/divisions/add_divisions.html", current_divisions=current_divisions,alert=alert)
 
         
