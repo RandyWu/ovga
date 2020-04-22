@@ -274,7 +274,6 @@ def get_registered():
 
     return render_template("/events/get_players.html", player_list=player_list, success=success)
 
-# TODO: Figure out a way to add groups to events
 @app.route('/events/edit_player/registered_groups', methods=['POST', 'GET'])
 def get_groups():
     action = request.form.get("action")
