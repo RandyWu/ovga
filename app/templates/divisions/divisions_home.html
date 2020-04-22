@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Begin page content -->
+<main role="main" class="container">
+	<div class="contain" style="width:60%; margin-left: 25%;">
+	  <div class="right-half round">
+		<form id="editscores_landing" method="POST">
+			<h4>Edit Divisions</h4><br/>
+			<div>
+                <br>
+    			
+				<center>
+				<button type="submit" class="btn btn-success form-control" onclick="window.location='{{ url_for('add_divisions') }}'">Add/Remove Division</button><br/><br/>
+				<!-- If selected an event go to edit_divisions.html -->
+				<p>Choose an Event: 
+				<select id="eventSelect" name="event_select" class="form-control" required>
+				<option value="" disabled selected>Select an Event...</option>
+			    <!-- Foreach Event -->
+				{% for event in event_list%}
+					<option value={{event.EventId}}>{{event.Name}} - {{event.Address}} - {{event.Date}}</option>
+				{% endfor %}
+				</select>
+			</p><br/><button type="submit" class="btn btn-primary form-control" id="event_select" name="submit" value="submit">Edit</button><br/><br/>
+				<button type="button" class="btn btn-info form-control" onclick="window.location='{{ url_for('admin') }}'"><i class="fas fa-backward"></i> Back to Admin</button><br/><br/>
+				</center>
+			</div>
+		</form>
+	  </div>
+	</div>	
+</main>
+{% endblock %}
