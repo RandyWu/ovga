@@ -26,7 +26,7 @@ def divisions():
 
     return render_template("/divisions/divisions_home.html", event_list=event_list)
 
-@app.route('/divisions/edit')
+@app.route('/divisions/edit', methods=['POST','GET'])
 def edit_divisions():
     if not current_user.is_authenticated:
         return redirect(url_for('login'))
@@ -47,41 +47,28 @@ def edit_divisions():
         event_name = event.Name
         event_date = event.Date
 
+        event_groups = Division.query.filter_by(EventID=selected_event).distinct().all()
+
         if request.method == 'POST' and request.form.get('submit') == 'submit':
-            new_name = request.form.get("event_name")
-            new_date = request.form.get("event_date")
-            new_venue = int(request.form.get("venue_list"))
-            new_course = int(request.form.get("course_list"))
-
-            event.Name = new_name
-            event.Date = new_date
-            event.Venue_Id = new_venue
-            event.CourseID = new_course
+            group = request.form.get("div_group")
+            div = Division.query.filter_by(DivisionID=group).first()
+            div.Division = request.form.get("Name")
             db.session.commit()
-
-            venue_list = Venue.query.all()
-            course_list = Course.query.filter_by(VenueID=event_venue).all()
 
             return render_template(
                 "/divisions/edit_divisions.html",
-                event_name=new_name,
-                event_date=new_date,
-                event_venue=new_venue,
-                event_course=new_course,
-                venue_list=venue_list,
-                course_list=course_list)
+                event_groups=event_groups,
+                )
         
     return render_template(
         "/divisions/edit_divisions.html", 
+        event_groups=event_groups,
         event_name=event_name, 
         event_date=event_date,
         event_venue=event_venue,
         event_course=event_course,
         venue_list=venue_list,
         course_list=course_list)
-
-    return render_template("/divisions/edit_divisions.html")
-
 
 @app.route('/divisions/add', methods=['POST', 'GET'])
 def add_divisions():
@@ -133,5 +120,6 @@ def add_divisions():
                 return render_template("/divisions/add_divisions.html", current_divisions=current_divisions,alert=alert)
         
     return render_template("/divisions/add_divisions.html", current_divisions=current_divisions,alert=alert)
+
 
         
