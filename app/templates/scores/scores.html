@@ -85,7 +85,7 @@ var total_num_of_holes = "{{loop.length}}";
 
 for(j=1; j<=50; j++){
 // k is current hole num
-for(var k=1; plyr2 = document.getElementById(id+"hole"+k), plyr1 = document.getElementById("num"+num+"player"+j+"hole"+k); k++) {
+for(var k=1; plyr1 = document.getElementById(id+"hole"+k), plyr2 = document.getElementById("num"+num+"player"+j+"hole"+k); k++) {
     if(plyr1!=plyr2){
 	
 	var remainingHoles = parseInt(total_num_of_holes) - parseInt(k);
@@ -110,13 +110,23 @@ for(var k=1; plyr2 = document.getElementById(id+"hole"+k), plyr1 = document.getE
 		result = "all square";
 	}
 
+	if(result=="won" && parseInt(points) == 1 && parseInt(remainingHoles) == 0){
+		show = "1 up";
+		break;
+	}
+
 	if(result=="won" && parseInt(points) - parseInt(remainingHoles) > 0){
-		show = win+ " and " +remainingHoles;
+		show = points+ " and " +remainingHoles;
+		break;
+	}
+
+	if(result=="lost" && parseInt(points) == -1 && parseInt(remainingHoles) == 0){
+		show = "1 down";
 		break;
 	}
 
 	if(result=="lost" && parseInt(points) + parseInt(remainingHoles) < 0){
-		show = lose+ " and " +remainingHoles;
+		show = Math.abs(parseInt(points))+ " and " +remainingHoles;
 		break;
 	}
 
