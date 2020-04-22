@@ -127,10 +127,6 @@ def editplayerpersonal():
 def choose_event():
     if not current_user.is_authenticated:
         return redirect(url_for('login'))
-    user = User.query.filter_by(UserId=current_user.UserId).first()
-    if user.Role != 'player':
-        flash("Opps you don't have access to this page")
-        return render_template("index.html")
 
     user = current_user.UserId
 
