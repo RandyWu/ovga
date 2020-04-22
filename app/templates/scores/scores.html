@@ -38,8 +38,8 @@
 						{%for hole_num in range(1,num_of_holes+1) %}
 							<td value={{hole_num}} id="num{{outer_loop.index}}player{{second_loop.index}}hole{{loop.index}}">{{page_info[division][player]["Scores"][hole_num]}}</td>
 						{% endfor %}
-						<td><b>{{score_totals[player]}}</b></td>
-						<td>{Result}</td>
+						<td><b>{{score_totals[division][player]['Total']}}</b></td>
+						<td><b>{{score_totals[division][player]['Standing']}}</b></td>
 					</tr>
 					{% endfor %}
 					<!-- Foreach player end -->

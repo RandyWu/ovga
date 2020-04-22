@@ -2,6 +2,7 @@ from app import app
 from flask_login import current_user, login_user
 from flask import Flask, flash, session,render_template,request,redirect,url_for
 from app.model.model import *
+from collections import OrderedDict
 
 @app.route('/scores/<event_id>')
 def scores(event_id):
@@ -23,10 +24,13 @@ def scores(event_id):
     all_players = PlayerDivision.query.filter_by(Event_Id=event_id).all()
     all_divisions = Division.query.filter_by(EventID=event_id).distinct().all()
 
+    # page_info used to populate the score tables
     page_info = {}
+    # score_totals used to populate player totals and standings
     score_totals = {}
     for divisions in all_divisions:
         page_info[divisions.DivisionID] = {}
+        score_totals[divisions.DivisionID] = {}
 
     for player in all_players:
         try:
@@ -42,6 +46,11 @@ def scores(event_id):
             page_info[player.Division_Id].update({player.Player_Id:{}})
             page_info[player.Division_Id][player.Player_Id].update({"Name":player_name})
             page_info[player.Division_Id][player.Player_Id].update({"Scores":{}})
+
+            score_totals[player.Division_Id].update({player.Player_Id:{}})
+            score_totals[player.Division_Id][player.Player_Id].update({"Total":""})
+            score_totals[player.Division_Id][player.Player_Id].update({"Standing":""})
+
         except:
             return render_template(
             "/scores/scores.html", 
@@ -51,7 +60,32 @@ def scores(event_id):
         for score in player_scores:
             page_info[player.Division_Id][player.Player_Id]["Scores"].update({score.HoleID : score.Strokes})
 
-        score_totals.update({player.Player_Id : sum(page_info[player.Division_Id][player.Player_Id]["Scores"].values())})
+        score_totals[player.Division_Id][player.Player_Id]["Total"] = sum(page_info[player.Division_Id][player.Player_Id]["Scores"].values())
+    
+    # Sorting the score totals to have the lowest score appear first
+    # Done by using an OrderedDict of OrderedDicts
+    ordered_totals = OrderedDict(sorted((k, OrderedDict(sorted(v.items(),reverse=True))) for k,v in score_totals.items()))
+
+    standings_values = {
+        1:'First',
+        2:'Second',
+        3:'Third'
+    }
+
+    # Going through the ordered dict and adding a standing to the players
+    for division in all_divisions:
+        standing = 1
+        index = 0
+        highest_score = []
+        for player in ordered_totals[division.DivisionID]:
+            if standing <= 3:
+                ordered_totals[division.DivisionID][player]['Standing'] = standings_values[standing]
+                standing += 1
+            else:
+                ordered_totals[division.DivisionID][player]['Standing'] = ""
+                standing += 1
+        standing = 0
+        
 
     holes = Hole.query.filter_by(CourseID=course_id).order_by(Hole.Hole_Num.asc())
     
