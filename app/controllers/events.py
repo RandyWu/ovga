@@ -247,7 +247,7 @@ def get_registered():
         # then a comparison to all players in the Player table is made
         # and all players in the Player table and NOT IN the subquery
         # is returned
-        subquery = Player.query.outerjoin(PlayerDivision).filter(PlayerDivision.Event_Id==selected_event)
+        subquery = Player.query.outerjoin(PlayerDivision).filter(PlayerDivision.Event_Id==selected_event).all()
         # unsuded code that doesn't work
         # player_list = Player.query.filter(Player.PlayerId.notin_(subquery.Player))
         Players = Player.query.all()

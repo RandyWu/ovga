@@ -42,6 +42,7 @@ def scores(event_id):
             "/scores/scores.html", 
             page_title = "No Players Registered",
         )
+        # add players not showing
         try:
             page_info[player.Division_Id].update({player.Player_Id:{}})
             page_info[player.Division_Id][player.Player_Id].update({"Name":player_name})
@@ -62,31 +63,6 @@ def scores(event_id):
 
         score_totals[player.Division_Id][player.Player_Id]["Total"] = sum(page_info[player.Division_Id][player.Player_Id]["Scores"].values())
     
-    # Sorting the score totals to have the lowest score appear first
-    # Done by using an OrderedDict of OrderedDicts
-    ordered_totals = OrderedDict(sorted((k, OrderedDict(sorted(v.items(),reverse=True))) for k,v in score_totals.items()))
-
-    standings_values = {
-        1:'First',
-        2:'Second',
-        3:'Third'
-    }
-
-    # Going through the ordered dict and adding a standing to the players
-    for division in all_divisions:
-        standing = 1
-        index = 0
-        highest_score = []
-        for player in ordered_totals[division.DivisionID]:
-            if standing <= 3:
-                ordered_totals[division.DivisionID][player]['Standing'] = standings_values[standing]
-                standing += 1
-            else:
-                ordered_totals[division.DivisionID][player]['Standing'] = ""
-                standing += 1
-        standing = 0
-        
-
     holes = Hole.query.filter_by(CourseID=course_id).order_by(Hole.Hole_Num.asc())
     
     num_of_holes = 0
@@ -97,8 +73,6 @@ def scores(event_id):
     for hole in range(0,num_of_holes):
         par_list.append(holes[hole].Par)
     par_total = sum(par_list)
-
-# TODO: Player Results
 
     return render_template(
         "/scores/scores.html", 
