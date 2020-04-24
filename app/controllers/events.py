@@ -224,8 +224,15 @@ def editevent_player():
                 return render_template("/events/editevent_player.html", registered_players=registered_players, event=event, alert=alert)
 
             elif action == "remove":
+                # Delete player scores from event
+                removed_scores = Score.query.filter_by(PlayerID=player_id,EventID=selected_event).all()
+                for score in removed_scores:
+                    db.session.delete(score)
+                    
+                # Delete player from division
                 removed_player = PlayerDivision.query.filter_by(Player_Id=player_id,Event_Id=selected_event).first()
                 db.session.delete(removed_player)
+                
                 alert = "block"
                 db.session.commit()
 
