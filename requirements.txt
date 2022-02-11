@@ -16,7 +16,7 @@ MarkupSafe==1.1.1
 mysqlclient==1.4.6
 numpy==1.18.1
 pandas==1.0.1
-protobuf==3.11.3
+protobuf==3.15.0
 pydbgen==1.0.5
 python-dateutil==2.8.1
 pytz==2019.3
